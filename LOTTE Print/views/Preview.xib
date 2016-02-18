@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="GhanaPromoFont.otf">
+            <string>GhanaPromoFont</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Preview" customModule="LOTTE_Print" customModuleProvider="target">
             <connections>
+                <outlet property="lbName" destination="cdv-zx-0GY" id="bwX-Ql-JET"/>
                 <outlet property="mBtnPrint" destination="f3Z-pz-Q2F" id="TJP-6H-OtN"/>
-                <outlet property="mViewCard" destination="jsy-8p-plY" id="8Zd-jL-qeM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,62 +22,46 @@
             <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="preview" translatesAutoresizingMaskIntoConstraints="NO" id="WXr-Ob-yih">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="preview" id="WXr-Ob-yih">
                     <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAP-mP-7JZ" userLabel="back">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xAP-mP-7JZ" userLabel="back">
                     <rect key="frame" x="82" y="586" width="194" height="98"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="btnBack:" destination="-1" eventType="touchUpInside" id="FuQ-zj-cei"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3Z-pz-Q2F" userLabel="print">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="f3Z-pz-Q2F" userLabel="print">
                     <rect key="frame" x="404" y="525" width="217" height="110"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="110" id="ZOu-My-CRY"/>
-                        <constraint firstAttribute="width" constant="217" id="zRE-FA-7rc"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="btnPrint:" destination="-1" eventType="touchUpInside" id="mWt-gG-SnB"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y38-A5-7fc" userLabel="home">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="y38-A5-7fc" userLabel="home">
                     <rect key="frame" x="745" y="586" width="194" height="95"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="btnFinished:" destination="-1" eventType="touchUpInside" id="f5I-8v-bVI"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jsy-8p-plY" userLabel="card">
-                    <rect key="frame" x="247" y="103" width="536" height="290"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="290" id="hf7-Xn-0Fs"/>
-                    </constraints>
-                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Megumi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="cdv-zx-0GY">
+                    <rect key="frame" x="257" y="174" width="511" height="134"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="94"/>
+                    <color key="textColor" red="0.82745098039215681" green="0.72549019607843135" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="jsy-8p-plY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="103" id="0sO-gc-AMp"/>
-                <constraint firstItem="f3Z-pz-Q2F" firstAttribute="top" secondItem="jsy-8p-plY" secondAttribute="bottom" constant="132" id="163-qL-2fo"/>
-                <constraint firstAttribute="bottom" secondItem="WXr-Ob-yih" secondAttribute="bottom" id="Bw6-96-N7t"/>
-                <constraint firstItem="WXr-Ob-yih" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MXs-uz-dy3"/>
-                <constraint firstItem="WXr-Ob-yih" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="e5I-Fp-Cgw"/>
-                <constraint firstAttribute="trailing" secondItem="WXr-Ob-yih" secondAttribute="trailing" id="qSz-bY-TdW"/>
-                <constraint firstAttribute="bottom" secondItem="f3Z-pz-Q2F" secondAttribute="bottom" constant="133" id="xsO-Md-y9B"/>
-                <constraint firstAttribute="trailing" secondItem="jsy-8p-plY" secondAttribute="trailing" constant="241" id="yUd-5x-kQz"/>
-                <constraint firstItem="f3Z-pz-Q2F" firstAttribute="centerX" secondItem="WXr-Ob-yih" secondAttribute="centerX" id="ytx-P1-ozg"/>
-                <constraint firstItem="jsy-8p-plY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="247" id="yuR-Zf-fb3"/>
-            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="163-qL-2fo"/>
-                </mask>
-            </variation>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="565" y="433"/>
         </view>
     </objects>
     <resources>

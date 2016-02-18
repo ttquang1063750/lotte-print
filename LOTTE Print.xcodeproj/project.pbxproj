@@ -18,6 +18,11 @@
 		A9D51D261C748AA50014F087 /* Preview.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9D51D241C748AA50014F087 /* Preview.xib */; };
 		A9D51D291C748DD80014F087 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D51D271C748DD80014F087 /* Card.swift */; };
 		A9D51D2A1C748DD80014F087 /* Card.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9D51D281C748DD80014F087 /* Card.xib */; };
+		A9F039641C75847C00A36670 /* completed-embed.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A9F039611C75847C00A36670 /* completed-embed.pdf */; };
+		A9F039651C75847C00A36670 /* GhanaPromoFont.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9F039621C75847C00A36670 /* GhanaPromoFont.otf */; };
+		A9F039661C75847C00A36670 /* GhanaPromoFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9F039631C75847C00A36670 /* GhanaPromoFont.ttf */; };
+		A9F0396A1C75A5C300A36670 /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F039691C75A5C300A36670 /* DataHelper.swift */; };
+		A9F0396C1C75B20000A36670 /* GvCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F0396B1C75B20000A36670 /* GvCommon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +39,11 @@
 		A9D51D241C748AA50014F087 /* Preview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preview.xib; sourceTree = "<group>"; };
 		A9D51D271C748DD80014F087 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		A9D51D281C748DD80014F087 /* Card.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Card.xib; sourceTree = "<group>"; };
+		A9F039611C75847C00A36670 /* completed-embed.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "completed-embed.pdf"; sourceTree = "<group>"; };
+		A9F039621C75847C00A36670 /* GhanaPromoFont.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GhanaPromoFont.otf; sourceTree = "<group>"; };
+		A9F039631C75847C00A36670 /* GhanaPromoFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GhanaPromoFont.ttf; sourceTree = "<group>"; };
+		A9F039691C75A5C300A36670 /* DataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
+		A9F0396B1C75B20000A36670 /* GvCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GvCommon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,9 +76,12 @@
 		A9D51D0B1C747B950014F087 /* LOTTE Print */ = {
 			isa = PBXGroup;
 			children = (
+				A9F039601C75847C00A36670 /* font */,
 				A9D51D1E1C7485250014F087 /* views */,
 				A9D51D0C1C747B950014F087 /* AppDelegate.swift */,
+				A9F0396B1C75B20000A36670 /* GvCommon.swift */,
 				A9D51D0E1C747B950014F087 /* ViewController.swift */,
+				A9F039691C75A5C300A36670 /* DataHelper.swift */,
 				A9D51D101C747B950014F087 /* Main.storyboard */,
 				A9D51D131C747B950014F087 /* Assets.xcassets */,
 				A9D51D151C747B950014F087 /* LaunchScreen.storyboard */,
@@ -88,6 +101,16 @@
 				A9D51D281C748DD80014F087 /* Card.xib */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		A9F039601C75847C00A36670 /* font */ = {
+			isa = PBXGroup;
+			children = (
+				A9F039611C75847C00A36670 /* completed-embed.pdf */,
+				A9F039621C75847C00A36670 /* GhanaPromoFont.otf */,
+				A9F039631C75847C00A36670 /* GhanaPromoFont.ttf */,
+			);
+			path = font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,8 +172,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9D51D171C747B950014F087 /* LaunchScreen.storyboard in Resources */,
+				A9F039661C75847C00A36670 /* GhanaPromoFont.ttf in Resources */,
+				A9F039641C75847C00A36670 /* completed-embed.pdf in Resources */,
 				A9D51D2A1C748DD80014F087 /* Card.xib in Resources */,
 				A9D51D221C7485700014F087 /* InputView.xib in Resources */,
+				A9F039651C75847C00A36670 /* GhanaPromoFont.otf in Resources */,
 				A9D51D141C747B950014F087 /* Assets.xcassets in Resources */,
 				A9D51D261C748AA50014F087 /* Preview.xib in Resources */,
 				A9D51D121C747B950014F087 /* Main.storyboard in Resources */,
@@ -166,6 +192,8 @@
 			files = (
 				A9D51D211C7485700014F087 /* InputView.swift in Sources */,
 				A9D51D0F1C747B950014F087 /* ViewController.swift in Sources */,
+				A9F0396A1C75A5C300A36670 /* DataHelper.swift in Sources */,
+				A9F0396C1C75B20000A36670 /* GvCommon.swift in Sources */,
 				A9D51D291C748DD80014F087 /* Card.swift in Sources */,
 				A9D51D251C748AA50014F087 /* Preview.swift in Sources */,
 				A9D51D0D1C747B950014F087 /* AppDelegate.swift in Sources */,
@@ -318,6 +346,7 @@
 				A9D51D1D1C747B950014F087 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="GhanaPromoFont.otf">
+            <string>GhanaPromoFont</string>
+            <string>GhanaPromoFont</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputView" customModule="LOTTE_Print" customModuleProvider="target">
             <connections>
                 <outlet property="personIndex" destination="kdB-Ck-gbh" id="rY4-ve-7Oi"/>
+                <outlet property="scrollView" destination="z0o-lc-ejF" id="r9m-ye-rQG"/>
                 <outlet property="tfPersonName" destination="KpL-e7-eLW" id="BfC-hz-NRg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -17,45 +24,51 @@
             <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="input" translatesAutoresizingMaskIntoConstraints="NO" id="qMQ-v4-h29">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="z0o-lc-ejF">
                     <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kdB-Ck-gbh">
-                    <rect key="frame" x="231" y="202" width="562" height="77"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="44"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Please input your name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KpL-e7-eLW">
-                    <rect key="frame" x="231" y="394" width="562" height="73"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="44"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQX-1r-wBQ">
-                    <rect key="frame" x="82" y="588" width="196" height="94"/>
-                    <connections>
-                        <action selector="goBack:" destination="-1" eventType="touchUpInside" id="jjx-ZU-Y9j"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tR-1F-7aB">
-                    <rect key="frame" x="744" y="588" width="196" height="94"/>
-                    <connections>
-                        <action selector="submitForm:" destination="-1" eventType="touchUpInside" id="m6U-CO-08m"/>
-                    </connections>
-                </button>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="input" id="qMQ-v4-h29">
+                            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kdB-Ck-gbh">
+                            <rect key="frame" x="231" y="203" width="562" height="77"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="44"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Input your name" textAlignment="center" minimumFontSize="17" id="KpL-e7-eLW">
+                            <rect key="frame" x="231" y="394" width="562" height="73"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="44"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rQX-1r-wBQ" userLabel="back">
+                            <rect key="frame" x="82" y="588" width="196" height="94"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="goBack:" destination="-1" eventType="touchUpInside" id="jjx-ZU-Y9j"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9tR-1F-7aB" userLabel="submit">
+                            <rect key="frame" x="744" y="588" width="196" height="94"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="submitForm:" destination="-1" eventType="touchUpInside" id="m6U-CO-08m"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="qMQ-v4-h29" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="27E-k0-Yh5"/>
-                <constraint firstAttribute="trailing" secondItem="qMQ-v4-h29" secondAttribute="trailing" id="8Vv-Qr-FFj"/>
-                <constraint firstAttribute="bottom" secondItem="qMQ-v4-h29" secondAttribute="bottom" id="FNH-OC-oh7"/>
-                <constraint firstItem="qMQ-v4-h29" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MT6-UP-hTQ"/>
-            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="527" y="433"/>
         </view>
     </objects>
     <resources>
