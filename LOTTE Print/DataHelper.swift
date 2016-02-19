@@ -21,7 +21,23 @@ class DataHelper {
     }
     
     private let INDEXING = "INDEXING"
+    private let PRINTER = "PRINTER"
     
+    
+    func setCurrentPrinterUrl(url:NSURL){
+        NSUserDefaults.standardUserDefaults().setURL(url, forKey: PRINTER)
+    }
+    
+    func getCurrentPrinterURL()->NSURL?{
+        if(NSUserDefaults.standardUserDefaults().URLForKey(PRINTER) == nil){
+            return nil
+        }
+        return NSUserDefaults.standardUserDefaults().URLForKey(PRINTER)!
+    }
+    
+    func removeCurrentPrinterUrl(){
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(PRINTER)
+    }
     
     func setCurrentIndex(index:Int){
         NSUserDefaults.standardUserDefaults().setInteger(index, forKey: INDEXING)

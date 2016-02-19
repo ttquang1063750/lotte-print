@@ -7,13 +7,12 @@
 //
 
 import UIKit
-var _current:ViewController?
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        _current = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,10 +28,6 @@ class ViewController: UIViewController {
     @IBAction func gotoInputView(sender: UIButton) {
         let inputView = InputView(nibName:"InputView",bundle: nil)
         self.presentViewController(inputView, animated: true, completion: nil)
-    }
-    
-    class func shareInstance()->ViewController{
-        return _current!
     }
 }
 

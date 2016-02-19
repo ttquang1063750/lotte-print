@@ -16,13 +16,16 @@ class Preview: UIViewController {
     var isPrint = false
     
     var textName = ""
-    let card = Card(nibName:"Card", bundle: nil)
+    let card = Card.sharedInstance
+    var pdfPath:NSURL!
     override func viewDidLoad() {
         super.viewDidLoad()
         lbName.text = textName
         // Do any additional setup after loading the view.
-        card.view.frame = CGRectMake(0, 0, 465, 214)
-        card.loadViewIfNeeded()
+        createPDFfromUIView(card.view, aFilename: "card.pdf"){
+            pdfPath in
+            self.pdfPath = pdfPath
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -34,27 +37,26 @@ class Preview: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    //Button back to previous
     @IBAction func btnBack(sender: UIButton) {
         setCountIndex()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //Button printer
     @IBAction func btnPrint(sender: UIButton) {
-        card.setPersonName(textName)
-        createPDFfromUIView(card.view, aFilename: "\(DataHelper.sharedInstance.getIncreaseIndex()).pdf"){
-            pdfPath in
-            self.tryPrintPdf(pdfPath){
-                self.isPrint = true
-            }
-        }
-        
+        self.printCard()
     }
     
+    
+    //Button finished page
     @IBAction func btnFinished(sender: UIButton) {
         setCountIndex()
         self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //Set name for label person name
     func setPersonName(name:String){
         textName = name
     }
@@ -66,6 +68,43 @@ class Preview: UIViewController {
         }
     }
     
+    func printCard(){
+        let printerUrl = DataHelper.sharedInstance.getCurrentPrinterURL()?.absoluteString
+        if( printerUrl == nil){
+            self.searchPrinter({ (printerUrl) -> Void in
+                self.printWithoutPanel(printerUrl, dataUrl: self.pdfPath, callback: {
+                    (error) -> Void in
+                    self.confirm(error)
+                })
+            })
+        }else{
+            self.printWithoutPanel(printerUrl!, dataUrl: self.pdfPath, callback: {
+                (error) -> Void in
+                self.confirm(error)
+            })
+        }
+    }
+    
+    
+    func confirm(error:NSError?){
+        if(error == nil){
+            self.isPrint = true
+        }else{
+            let dialog = UIAlertController(title: "Connect Printer Error", message: "Do you want to search printer again", preferredStyle: UIAlertControllerStyle.Alert)
+            dialog.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.Default, handler: {
+                (action)->Void in
+                DataHelper.sharedInstance.removeCurrentPrinterUrl()
+                self.printCard()
+            }))
+            dialog.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            self.presentViewController(dialog, animated: true, completion: nil)
+        }
+    }
+}
+
+
+//Create PDF file from UIView
+extension Preview{
     func createPDFfromUIView(aView:UIView, aFilename:String, callback:(pathName:NSURL)->Void){
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             // Creates a mutable data object for updating with binary data, like a byte array
@@ -91,21 +130,73 @@ class Preview: UIViewController {
             
             //Lastly, write your file to the disk.
             pdfData.writeToURL(url!, atomically: true)
-    
+            
             // instructs the mutable data object to write its context to a file on disk
             callback(pathName: url!)
         })
         
     }
-    
-    func tryPrintPdf(url:NSURL, callback:()->Void){
+}
+
+//Search printer
+extension Preview{
+    func searchPrinter(callback:(printerUrl:String)->Void) {
+        dispatch_async(dispatch_get_main_queue(), {
+            if(NSFoundationVersionNumber > 7.1) {
+                let printPicker = UIPrinterPickerController(initiallySelectedPrinter: nil)
+                printPicker.presentFromRect(CGRectMake(0, 0, 300, 500), inView: self.view, animated: true, completionHandler: {
+                    (printPicker, userDidSelect, error) -> Void in
+                    // Print address of printer simulator that you choose
+                    if(userDidSelect){
+                        DataHelper.sharedInstance.setCurrentPrinterUrl((printPicker.selectedPrinter?.URL)!)
+                        callback(printerUrl: (printPicker.selectedPrinter?.URL.description)!)
+                    }
+                })
+            }
+        })
+    }
+}
+
+
+//Print file without show print option
+extension Preview{
+    func printWithoutPanel(printerUrl:String, dataUrl:NSURL, callback:(error:NSError?)->Void) {
+        dispatch_async(dispatch_get_main_queue(), {
+            let myData = NSData(contentsOfURL: dataUrl)
+            if (UIPrintInteractionController.canPrintData(myData!) ) {
+                let printController = UIPrintInteractionController.sharedPrintController()
+                let printInfo = UIPrintInfo.printInfo()
+                printInfo.outputType = UIPrintInfoOutputType.Photo
+                printController.printInfo = printInfo;
+                printController.showsPageRange = false;
+                printController.printingItem = myData;
+                
+                // Create printer information
+                let printerURL = NSURL(string: printerUrl)
+                let printer = UIPrinter(URL: printerURL!)
+                
+                // I will print without printer panel this here.
+                printController.printToPrinter(printer, completionHandler: {
+                    (printer, b, error) -> Void in
+                    callback(error: error)
+                })
+            }
+        })
+        
+    }
+}
+
+//Print file with show print option
+extension Preview{
+    func printPdfFilePanel(url:NSURL, callback:()->Void){
         dispatch_async(dispatch_get_main_queue(), {
             let myData = NSData(contentsOfURL: url)
             if (UIPrintInteractionController.canPrintData(myData!) ) {
                 let printController = UIPrintInteractionController.sharedPrintController()
                 let printInfo = UIPrintInfo.printInfo()
+                printInfo.outputType = UIPrintInfoOutputType.Photo
                 printController.printInfo = printInfo;
-                printController.showsPageRange = true;
+                printController.showsPageRange = false;
                 printController.printingItem = myData;
                 printController.presentAnimated(true, completionHandler: { (printer, b, error) -> Void in
                     callback()
@@ -113,7 +204,5 @@ class Preview: UIViewController {
                 
             }
         })
-        
     }
-    
 }

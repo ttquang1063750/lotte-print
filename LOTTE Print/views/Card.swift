@@ -24,5 +24,18 @@ class Card: UIViewController {
     func setPersonName(name:String){
         mName.text = name
     }
+    
+    class var sharedInstance: Card {
+        struct Static {
+            static var instance: Card?
+            static var token: dispatch_once_t = 0
+        }
+        dispatch_once(&Static.token) {
+            Static.instance = Card(nibName:"Card", bundle: nil)
+            Static.instance!.view.frame = CGRectMake(0, 0, 465, 214)
+            Static.instance!.loadViewIfNeeded()
+        }
+        return Static.instance!
+    }
 
 }

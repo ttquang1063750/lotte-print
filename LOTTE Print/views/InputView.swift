@@ -47,6 +47,8 @@ class InputView: UIViewController, UITextFieldDelegate {
     @IBAction func submitForm(sender: UIButton) {
         if let text = tfPersonName.text where !text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).isEmpty
         {
+            let card = Card.sharedInstance
+            card.setPersonName(text)
             let previewViewController = Preview(nibName:"Preview", bundle: nil)
             previewViewController.setPersonName(text)
             self.presentViewController(previewViewController, animated: true, completion: nil)
