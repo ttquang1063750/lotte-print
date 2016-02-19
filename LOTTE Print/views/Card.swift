@@ -22,7 +22,7 @@ class Card: UIViewController {
     }
     
     func setPersonName(name:String){
-        mName.text = name
+        self.mName.text = name
     }
     
     class var sharedInstance: Card {
@@ -33,7 +33,6 @@ class Card: UIViewController {
         dispatch_once(&Static.token) {
             Static.instance = Card(nibName:"Card", bundle: nil)
             Static.instance!.view.frame = CGRectMake(0, 0, 465, 214)
-            Static.instance!.loadViewIfNeeded()
         }
         return Static.instance!
     }

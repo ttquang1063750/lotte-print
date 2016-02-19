@@ -16,12 +16,21 @@ class Preview: UIViewController {
     var isPrint = false
     
     var textName = ""
-    let card = Card.sharedInstance
+    var card:Card!
     var pdfPath:NSURL!
     override func viewDidLoad() {
         super.viewDidLoad()
         lbName.text = textName
         // Do any additional setup after loading the view.
+        card = Card(nibName:"Card", bundle: nil)
+        card.view.frame = CGRectMake(0, 0, 465, 214)
+        card.setPersonName(textName)
+        card.loadViewIfNeeded()
+    }
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         createPDFfromUIView(card.view, aFilename: "card.pdf"){
             pdfPath in
             self.pdfPath = pdfPath
