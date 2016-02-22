@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="GhanaPromoFont.otf">
+        <mutableArray key="GhanaPromoFont.ttf">
             <string>GhanaPromoFont</string>
         </mutableArray>
     </customFonts>
@@ -47,8 +47,8 @@
                         <action selector="btnFinished:" destination="-1" eventType="touchUpInside" id="f5I-8v-bVI"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Megumi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="cdv-zx-0GY">
-                    <rect key="frame" x="257" y="174" width="511" height="134"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meoumi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="cdv-zx-0GY">
+                    <rect key="frame" x="257" y="173" width="511" height="134"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="94"/>
                     <color key="textColor" red="0.82745098039215681" green="0.72549019607843135" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>

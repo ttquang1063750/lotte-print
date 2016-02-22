@@ -49,7 +49,7 @@ class Preview: UIViewController {
     
     //Button back to previous
     @IBAction func btnBack(sender: UIButton) {
-        setCountIndex()
+//        setCountIndex()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
