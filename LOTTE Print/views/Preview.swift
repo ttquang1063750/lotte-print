@@ -9,12 +9,13 @@
 import UIKit
 import QuartzCore
 
-class Preview: UIViewController {
+class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     
     @IBOutlet weak var lbName: UILabel!
     @IBOutlet weak var mBtnPrint: UIButton!
-    var isPrint = false
     
+    var lastPrinter:UIPrinter?
+    var isPrint = false
     var textName = ""
     var card:Card!
     var pdfPath:NSURL!
@@ -78,20 +79,10 @@ class Preview: UIViewController {
     }
     
     func printCard(){
-        let printerUrl = DataHelper.sharedInstance.getCurrentPrinterURL()?.absoluteString
-        if( printerUrl == nil){
-            self.searchPrinter({ (printerUrl) -> Void in
-                self.printWithoutPanel(printerUrl, dataUrl: self.pdfPath, callback: {
-                    (error) -> Void in
-                    self.confirm(error)
-                })
-            })
-        }else{
-            self.printWithoutPanel(printerUrl!, dataUrl: self.pdfPath, callback: {
-                (error) -> Void in
-                self.confirm(error)
-            })
-        }
+        self.printWithoutPanel(self.pdfPath, callback: {
+            (error) -> Void in
+            self.confirm(error)
+        })
     }
     
     
@@ -102,12 +93,17 @@ class Preview: UIViewController {
             let dialog = UIAlertController(title: "Connect Printer Error", message: "Do you want to search printer again", preferredStyle: UIAlertControllerStyle.Alert)
             dialog.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.Default, handler: {
                 (action)->Void in
-                DataHelper.sharedInstance.removeCurrentPrinterUrl()
-                self.printCard()
+                self.searchPrinter({
+                  self.printCard()  
+                })
             }))
             dialog.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
             self.presentViewController(dialog, animated: true, completion: nil)
         }
+    }
+    
+    func printerPickerControllerParentViewController(printerPickerController: UIPrinterPickerController) -> UIViewController? {
+        return self
     }
 }
 
@@ -149,17 +145,26 @@ extension Preview{
 
 //Search printer
 extension Preview{
-    func searchPrinter(callback:(printerUrl:String)->Void) {
+    func searchPrinter(callback:()->Void) {
         dispatch_async(dispatch_get_main_queue(), {
             if(NSFoundationVersionNumber > 7.1) {
-                let printPicker = UIPrinterPickerController(initiallySelectedPrinter: nil)
-                printPicker.presentFromRect(CGRectMake(0, 0, 300, 500), inView: self.view, animated: true, completionHandler: {
-                    (printPicker, userDidSelect, error) -> Void in
-                    // Print address of printer simulator that you choose
-                    if(userDidSelect){
-                        DataHelper.sharedInstance.setCurrentPrinterUrl((printPicker.selectedPrinter?.URL)!)
-                        callback(printerUrl: (printPicker.selectedPrinter?.URL.description)!)
-                    }
+                if(DataHelper.sharedInstance.getCurrentPrinterURL() != nil){
+                    self.lastPrinter = UIPrinter(URL: DataHelper.sharedInstance.getCurrentPrinterURL()!)
+                }else{
+                    self.lastPrinter = UIPrinter(URL: NSURL(string: "ipps://quang.local.:8632/printers/test")!)
+                }
+                
+                self.lastPrinter?.contactPrinter({ (isAvailable) -> Void in
+                    let printPicker = UIPrinterPickerController(initiallySelectedPrinter: self.lastPrinter)
+                    printPicker.delegate = self
+                    printPicker.presentFromRect(CGRectMake(0, 0, 80, 80), inView: self.view, animated: true, completionHandler: {
+                        (printPicker, userDidSelect, error) -> Void in
+                        // Print address of printer simulator that you choose
+                        if(userDidSelect){
+                            DataHelper.sharedInstance.setCurrentPrinterUrl(printPicker.selectedPrinter!.URL)
+                            callback()
+                        }
+                    })
                 })
             }
         })
@@ -169,7 +174,7 @@ extension Preview{
 
 //Print file without show print option
 extension Preview{
-    func printWithoutPanel(printerUrl:String, dataUrl:NSURL, callback:(error:NSError?)->Void) {
+    func printWithoutPanel(dataUrl:NSURL, callback:(error:NSError?)->Void) {
         dispatch_async(dispatch_get_main_queue(), {
             let myData = NSData(contentsOfURL: dataUrl)
             if (UIPrintInteractionController.canPrintData(myData!) ) {
@@ -181,14 +186,18 @@ extension Preview{
                 printController.printingItem = myData;
                 
                 // Create printer information
-                let printerURL = NSURL(string: printerUrl)
-                let printer = UIPrinter(URL: printerURL!)
-                
-                // I will print without printer panel this here.
-                printController.printToPrinter(printer, completionHandler: {
-                    (printer, b, error) -> Void in
-                    callback(error: error)
-                })
+                let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()
+                if(printerURL == nil){
+                    callback(error: NSError(domain: "no data", code: 500, userInfo: nil))
+                }else{
+                    
+                    let printer = UIPrinter(URL: printerURL!)
+                    // I will print without printer panel this here.
+                    printController.printToPrinter(printer, completionHandler: {
+                        (printer, b, error) -> Void in
+                        callback(error: error)
+                    })
+                }
             }
         })
         

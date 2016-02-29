@@ -9,8 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController, UIPrinterPickerControllerDelegate {
-
-    var printer:UIPrinter?
+    
+    var lastPrinter:UIPrinter?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -34,21 +34,22 @@ class ViewController: UIViewController, UIPrinterPickerControllerDelegate {
     @IBAction func btnSetting(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue(), {
             if(NSFoundationVersionNumber > 7.1) {
-                let lastPrinter = DataHelper.sharedInstance.getPrinter()
-                if(lastPrinter != nil){
-                    self.printer = lastPrinter
+                if(DataHelper.sharedInstance.getCurrentPrinterURL() != nil){
+                    self.lastPrinter = UIPrinter(URL: DataHelper.sharedInstance.getCurrentPrinterURL()!)
+                }else{
+                    self.lastPrinter = UIPrinter(URL: NSURL(string: "ipps://quang.local.:8632/printers/test")!)
                 }
                 
-                let printPicker = UIPrinterPickerController(initiallySelectedPrinter: self.printer)
-                printPicker.delegate = self
-                printPicker.presentFromRect(CGRectMake(0, 0, 80, 80), inView: self.view, animated: true, completionHandler: {
-                    (printPicker, userDidSelect, error) -> Void in
-                    // Print address of printer simulator that you choose
-                    if(userDidSelect){
-                        DataHelper.sharedInstance.setCurrentPrinterUrl((printPicker.selectedPrinter?.URL)!)
-                        self.printer = printPicker.selectedPrinter
-                        DataHelper.sharedInstance.setPrinter(self.printer!)
-                    }
+                self.lastPrinter?.contactPrinter({ (isAvailable) -> Void in
+                    let printPicker = UIPrinterPickerController(initiallySelectedPrinter: self.lastPrinter)
+                    printPicker.delegate = self
+                    printPicker.presentFromRect(CGRectMake(0, 0, 80, 80), inView: self.view, animated: true, completionHandler: {
+                        (printPicker, userDidSelect, error) -> Void in
+                        // Print address of printer simulator that you choose
+                        if(userDidSelect){
+                            DataHelper.sharedInstance.setCurrentPrinterUrl(printPicker.selectedPrinter!.URL)
+                        }
+                    })
                 })
             }
         })
