@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class DataHelper {
     class var sharedInstance: DataHelper {
@@ -22,21 +23,22 @@ class DataHelper {
     
     private let INDEXING = "INDEXING"
     private let PRINTER = "PRINTER"
+    private let PRINTER_URL = "PRINTER_URL"
     
     
     func setCurrentPrinterUrl(url:NSURL){
-        NSUserDefaults.standardUserDefaults().setURL(url, forKey: PRINTER)
+        NSUserDefaults.standardUserDefaults().setURL(url, forKey: PRINTER_URL)
     }
     
     func getCurrentPrinterURL()->NSURL?{
-        if(NSUserDefaults.standardUserDefaults().URLForKey(PRINTER) == nil){
+        if(NSUserDefaults.standardUserDefaults().URLForKey(PRINTER_URL) == nil){
             return nil
         }
-        return NSUserDefaults.standardUserDefaults().URLForKey(PRINTER)!
+        return NSUserDefaults.standardUserDefaults().URLForKey(PRINTER_URL)!
     }
     
     func removeCurrentPrinterUrl(){
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(PRINTER)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(PRINTER_URL)
     }
     
     func setCurrentIndex(index:Int){
@@ -56,5 +58,32 @@ class DataHelper {
     
     func synchronize(){
         NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    func setPrinter(obj:UIPrinter){
+//        NSKeyedArchiver.archiveRootObject(obj, toFile: fileInDocumentsDirectory(PRINTER))
+        let data = NSKeyedArchiver.archivedDataWithRootObject(obj)
+        NSUserDefaults.standardUserDefaults().setObject(data, forKey: "DATA")
+    }
+    
+    func getPrinter()->UIPrinter?{
+//        guard let printer = NSKeyedUnarchiver.unarchiveObjectWithFile(fileInDocumentsDirectory(PRINTER)) as? [UIPrinter] else { return nil }
+//        return printer[0]
+        
+        if(NSUserDefaults.standardUserDefaults().valueForKey("DATA") == nil){
+            return nil
+        }
+        let data = NSUserDefaults.standardUserDefaults().objectForKey("DATA") as! NSData
+       return  NSKeyedUnarchiver.unarchiveObjectWithData(data) as? UIPrinter
+    }
+    
+    func fileInDocumentsDirectory(filename: String) -> String {
+        let fileURL = getDocumentsDirectory().URLByAppendingPathComponent(filename)
+        return fileURL.path!
+    }
+    
+    func getDocumentsDirectory() -> NSURL {
+        let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        return documentsURL
     }
 }

@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPrinterPickerControllerDelegate {
 
+    var printer:UIPrinter?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -33,18 +34,44 @@ class ViewController: UIViewController {
     @IBAction func btnSetting(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue(), {
             if(NSFoundationVersionNumber > 7.1) {
-                let printPicker = UIPrinterPickerController(initiallySelectedPrinter: nil)
+                let lastPrinter = DataHelper.sharedInstance.getPrinter()
+                if(lastPrinter != nil){
+                    self.printer = lastPrinter
+                }
+                
+                let printPicker = UIPrinterPickerController(initiallySelectedPrinter: self.printer)
+                printPicker.delegate = self
                 printPicker.presentFromRect(CGRectMake(0, 0, 80, 80), inView: self.view, animated: true, completionHandler: {
                     (printPicker, userDidSelect, error) -> Void in
                     // Print address of printer simulator that you choose
                     if(userDidSelect){
                         DataHelper.sharedInstance.setCurrentPrinterUrl((printPicker.selectedPrinter?.URL)!)
+                        self.printer = printPicker.selectedPrinter
+                        DataHelper.sharedInstance.setPrinter(self.printer!)
                     }
                 })
             }
         })
     }
     
+    func printerPickerControllerParentViewController(printerPickerController: UIPrinterPickerController) -> UIViewController? {
+        return self
+    }
+
+}
+
+extension UIPrinter{
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(self)
+    }
     
+    func initWithCoder(aCoder: NSCoder)->UIPrinter?{
+        do{
+            let printer = try aCoder.decodeTopLevelObject() as! UIPrinter
+            return printer
+        }catch{
+            return nil
+        }
+    }
 }
 
