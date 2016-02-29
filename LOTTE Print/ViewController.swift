@@ -61,18 +61,3 @@ class ViewController: UIViewController, UIPrinterPickerControllerDelegate {
 
 }
 
-extension UIPrinter{
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self)
-    }
-    
-    func initWithCoder(aCoder: NSCoder)->UIPrinter?{
-        do{
-            let printer = try aCoder.decodeTopLevelObject() as! UIPrinter
-            return printer
-        }catch{
-            return nil
-        }
-    }
-}
-
