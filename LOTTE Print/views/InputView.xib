@@ -35,26 +35,30 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kdB-Ck-gbh">
                             <rect key="frame" x="231" y="203" width="562" height="77"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="44"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="49"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.058823529411764705" blue="0.031372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Input your name" textAlignment="center" minimumFontSize="17" id="KpL-e7-eLW">
                             <rect key="frame" x="231" y="394" width="562" height="73"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="44"/>
+                            <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="49"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rQX-1r-wBQ" userLabel="back">
-                            <rect key="frame" x="82" y="588" width="196" height="94"/>
+                            <rect key="frame" x="80" y="585" width="202" height="104"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="btnBackOff"/>
+                            <state key="highlighted" image="btnBackOn"/>
                             <connections>
                                 <action selector="goBack:" destination="-1" eventType="touchUpInside" id="jjx-ZU-Y9j"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9tR-1F-7aB" userLabel="submit">
-                            <rect key="frame" x="744" y="588" width="196" height="94"/>
+                            <rect key="frame" x="743" y="585" width="202" height="104"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="btnOkOff"/>
+                            <state key="highlighted" image="btnOkOn"/>
                             <connections>
                                 <action selector="submitForm:" destination="-1" eventType="touchUpInside" id="m6U-CO-08m"/>
                             </connections>
@@ -72,6 +76,10 @@
         </view>
     </objects>
     <resources>
+        <image name="btnBackOff" width="202" height="104"/>
+        <image name="btnBackOn" width="202" height="104"/>
+        <image name="btnOkOff" width="202" height="104"/>
+        <image name="btnOkOn" width="202" height="104"/>
         <image name="input" width="1024" height="768"/>
     </resources>
 </document>

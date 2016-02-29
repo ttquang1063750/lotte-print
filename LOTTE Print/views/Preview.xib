@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="GhanaPromoFont.ttf">
+        <mutableArray key="GhanaPromoFont.otf">
             <string>GhanaPromoFont</string>
         </mutableArray>
     </customFonts>
@@ -27,32 +27,39 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xAP-mP-7JZ" userLabel="back">
-                    <rect key="frame" x="82" y="586" width="194" height="98"/>
+                    <rect key="frame" x="80" y="585" width="202" height="104"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btnBackOff"/>
                     <connections>
                         <action selector="btnBack:" destination="-1" eventType="touchUpInside" id="FuQ-zj-cei"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="f3Z-pz-Q2F" userLabel="print">
-                    <rect key="frame" x="404" y="525" width="217" height="110"/>
+                    <rect key="frame" x="403" y="523" width="224" height="120"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btnPrintOff"/>
+                    <state key="highlighted" image="btnPrintOn"/>
                     <connections>
                         <action selector="btnPrint:" destination="-1" eventType="touchUpInside" id="mWt-gG-SnB"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="y38-A5-7fc" userLabel="home">
-                    <rect key="frame" x="745" y="586" width="194" height="95"/>
+                    <rect key="frame" x="743" y="585" width="202" height="104"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btnFinishedOff"/>
+                    <state key="highlighted" image="btnFinishedOn"/>
                     <connections>
                         <action selector="btnFinished:" destination="-1" eventType="touchUpInside" id="f5I-8v-bVI"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meoumi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="cdv-zx-0GY">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sakurako" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="cdv-zx-0GY">
                     <rect key="frame" x="257" y="173" width="511" height="134"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="94"/>
-                    <color key="textColor" red="0.82745098039215681" green="0.72549019607843135" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="77"/>
+                    <color key="textColor" red="0.8784313725490196" green="0.77254901960784317" blue="0.41568627450980394" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
+                    <color key="shadowColor" red="0.10196078431372549" green="0.074509803921568626" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                    <size key="shadowOffset" width="1" height="1"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -65,6 +72,11 @@
         </view>
     </objects>
     <resources>
+        <image name="btnBackOff" width="202" height="104"/>
+        <image name="btnFinishedOff" width="202" height="104"/>
+        <image name="btnFinishedOn" width="202" height="104"/>
+        <image name="btnPrintOff" width="223" height="120"/>
+        <image name="btnPrintOn" width="223" height="120"/>
         <image name="preview" width="1024" height="768"/>
     </resources>
 </document>

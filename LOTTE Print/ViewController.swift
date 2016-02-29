@@ -29,5 +29,22 @@ class ViewController: UIViewController {
         let inputView = InputView(nibName:"InputView",bundle: nil)
         self.presentViewController(inputView, animated: true, completion: nil)
     }
+    
+    @IBAction func btnSetting(sender: UIButton) {
+        dispatch_async(dispatch_get_main_queue(), {
+            if(NSFoundationVersionNumber > 7.1) {
+                let printPicker = UIPrinterPickerController(initiallySelectedPrinter: nil)
+                printPicker.presentFromRect(CGRectMake(0, 0, 80, 80), inView: self.view, animated: true, completionHandler: {
+                    (printPicker, userDidSelect, error) -> Void in
+                    // Print address of printer simulator that you choose
+                    if(userDidSelect){
+                        DataHelper.sharedInstance.setCurrentPrinterUrl((printPicker.selectedPrinter?.URL)!)
+                    }
+                })
+            }
+        })
+    }
+    
+    
 }
 

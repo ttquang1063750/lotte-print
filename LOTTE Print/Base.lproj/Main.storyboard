@@ -18,10 +18,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PYW-Vt-5ug">
-                                <rect key="frame" x="392" y="435" width="241" height="114"/>
+                                <rect key="frame" x="385" y="530" width="252" height="120"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="btnStartOff"/>
+                                <state key="highlighted" image="btnStartOn"/>
                                 <connections>
                                     <action selector="gotoInputView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NiH-uC-J8z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="raa-BE-h7A">
+                                <rect key="frame" x="934" y="58" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="btnSetting"/>
+                                <connections>
+                                    <action selector="btnSetting:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vhz-Og-5u0"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -38,6 +48,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="btnSetting" width="32" height="32"/>
+        <image name="btnStartOff" width="252" height="120"/>
+        <image name="btnStartOn" width="252" height="120"/>
         <image name="home" width="1024" height="768"/>
     </resources>
 </document>
