@@ -84,11 +84,11 @@
 				A9F0396B1C75B20000A36670 /* GvCommon.swift */,
 				A9D51D0E1C747B950014F087 /* ViewController.swift */,
 				A9F039691C75A5C300A36670 /* DataHelper.swift */,
+				A9FA6C101C85815600785FE3 /* GradientBackground.swift */,
 				A9D51D101C747B950014F087 /* Main.storyboard */,
 				A9D51D131C747B950014F087 /* Assets.xcassets */,
 				A9D51D151C747B950014F087 /* LaunchScreen.storyboard */,
 				A9D51D181C747B950014F087 /* Info.plist */,
-				A9FA6C101C85815600785FE3 /* GradientBackground.swift */,
 			);
 			path = "LOTTE Print";
 			sourceTree = "<group>";

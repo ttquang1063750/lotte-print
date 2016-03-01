@@ -22,15 +22,16 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         lbName.text = textName
-//        let imageGradient = UIImage(named: "textGradient.png")
-//        lbName.textColor = UIColor(patternImage: imageGradient!)
-        // Do any additional setup after loading the view.
+        
+        //Create view print
         card = Card(nibName:"Card", bundle: nil)
         card.view.frame = CGRectMake(0, 0, 465, 214)
         card.setPersonName(textName)
         card.loadViewIfNeeded()
-        let imageGradient = GradientBackground.gradientImage(lbName)
-        lbName.textColor = UIColor(patternImage: imageGradient)
+        
+        //Set color for text name
+       let image = GradientBackground.gradientImage(lbName.bounds.size)
+        lbName.textColor = UIColor(patternImage: image)
     }
     
     

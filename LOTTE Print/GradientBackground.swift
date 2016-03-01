@@ -8,8 +8,7 @@
 
 import UIKit
 class GradientBackground: NSObject {
-    class func gradientImage(label:UILabel)->UIImage{
-        let textSize:CGSize = label.intrinsicContentSize()
+    class func gradientImage(textSize:CGSize)->UIImage{
         let width:CGFloat = textSize.width        // max 1024 due to Core Graphics limitations
         let height:CGFloat = textSize.height      // max 1024 due to Core Graphics limitations
         
@@ -27,12 +26,13 @@ class GradientBackground: NSObject {
         let rgbColorspace:CGColorSpaceRef
         let num_locations:size_t = 2
         let locations:[CGFloat] = [ 0.0, 1.0 ]
-        let components:[CGFloat] = [ 1.0, 1.0, 1.0, 1.0,  // Start color
-            0.0, 0.0, 0.0, 1.0 ] // End color
+        let components:[CGFloat] = [ (252/255), (221/255), (120/255), 0.95,  // Start color
+            (252/255), (221/255), (120/255), 1.0] // End color
+
         rgbColorspace = CGColorSpaceCreateDeviceRGB()!
         glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations)!
         let startCenter:CGPoint = CGPointMake(0, 0)
-        let endCenter:CGPoint = CGPointMake(0, textSize.height)
+        let endCenter:CGPoint = CGPointMake(textSize.width, 0)
         CGContextDrawLinearGradient(context, glossGradient, startCenter, endCenter, CGGradientDrawingOptions.DrawsBeforeStartLocation)
         
         // pop context

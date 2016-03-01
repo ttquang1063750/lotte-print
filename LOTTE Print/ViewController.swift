@@ -14,6 +14,9 @@ class ViewController: UIViewController, UIPrinterPickerControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+//        let v = UIView(frame: CGRectMake(180,180,200,150))
+//        v.backgroundColor = UIColor(patternImage: GradientBackground.gradientImage(CGSize(width: 200, height: 150)))
+//        self.view.addSubview(v)
     }
 
     override func didReceiveMemoryWarning() {

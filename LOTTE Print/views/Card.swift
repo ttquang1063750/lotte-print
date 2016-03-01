@@ -23,6 +23,9 @@ class Card: UIViewController {
     
     func setPersonName(name:String){
         self.mName.text = name
+        //Set color for text name
+        let image = GradientBackground.gradientImage(self.mName.bounds.size)
+        self.mName.textColor = UIColor(patternImage: image)
     }
     
     class var sharedInstance: Card {
