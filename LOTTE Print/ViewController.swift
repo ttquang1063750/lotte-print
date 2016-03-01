@@ -44,9 +44,9 @@ class ViewController: UIViewController, UIPrinterPickerControllerDelegate {
                 }
                 
                 self.lastPrinter?.contactPrinter({ (isAvailable) -> Void in
-                    let printPicker = UIPrinterPickerController(initiallySelectedPrinter: self.lastPrinter)
-                    printPicker.delegate = self
-                    printPicker.presentFromRect(CGRectMake(0, 0, 80, 80), inView: self.view, animated: true, completionHandler: {
+                    let printPickerController = UIPrinterPickerController(initiallySelectedPrinter: self.lastPrinter)
+                    printPickerController.delegate = self
+                    printPickerController.presentFromRect(CGRectMake(0, 0, 80, 80), inView: self.view, animated: true, completionHandler: {
                         (printPicker, userDidSelect, error) -> Void in
                         // Print address of printer simulator that you choose
                         if(userDidSelect){
@@ -60,6 +60,11 @@ class ViewController: UIViewController, UIPrinterPickerControllerDelegate {
     
     func printerPickerControllerParentViewController(printerPickerController: UIPrinterPickerController) -> UIViewController? {
         return self
+    }
+    
+    func printerPickerController(printerPickerController: UIPrinterPickerController, shouldShowPrinter printer: UIPrinter) -> Bool {
+        print(printer)
+        return true
     }
 
 }
