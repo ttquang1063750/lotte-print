@@ -23,6 +23,7 @@
 		A9F039661C75847C00A36670 /* GhanaPromoFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9F039631C75847C00A36670 /* GhanaPromoFont.ttf */; };
 		A9F0396A1C75A5C300A36670 /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F039691C75A5C300A36670 /* DataHelper.swift */; };
 		A9F0396C1C75B20000A36670 /* GvCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F0396B1C75B20000A36670 /* GvCommon.swift */; };
+		A9FA6C111C85815600785FE3 /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA6C101C85815600785FE3 /* GradientBackground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		A9F039631C75847C00A36670 /* GhanaPromoFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GhanaPromoFont.ttf; sourceTree = "<group>"; };
 		A9F039691C75A5C300A36670 /* DataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
 		A9F0396B1C75B20000A36670 /* GvCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GvCommon.swift; sourceTree = "<group>"; };
+		A9FA6C101C85815600785FE3 /* GradientBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				A9D51D131C747B950014F087 /* Assets.xcassets */,
 				A9D51D151C747B950014F087 /* LaunchScreen.storyboard */,
 				A9D51D181C747B950014F087 /* Info.plist */,
+				A9FA6C101C85815600785FE3 /* GradientBackground.swift */,
 			);
 			path = "LOTTE Print";
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9D51D211C7485700014F087 /* InputView.swift in Sources */,
+				A9FA6C111C85815600785FE3 /* GradientBackground.swift in Sources */,
 				A9D51D0F1C747B950014F087 /* ViewController.swift in Sources */,
 				A9F0396A1C75A5C300A36670 /* DataHelper.swift in Sources */,
 				A9F0396C1C75B20000A36670 /* GvCommon.swift in Sources */,

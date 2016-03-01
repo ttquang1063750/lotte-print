@@ -29,6 +29,8 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
         card.view.frame = CGRectMake(0, 0, 465, 214)
         card.setPersonName(textName)
         card.loadViewIfNeeded()
+        let imageGradient = GradientBackground.gradientImage(lbName)
+        lbName.textColor = UIColor(patternImage: imageGradient)
     }
     
     
