@@ -49,7 +49,7 @@ class InputView: UIViewController, UITextFieldDelegate {
         {
             tfPersonName.resignFirstResponder()
             let previewViewController = Preview(nibName:"Preview", bundle: nil)
-            previewViewController.setPersonName(text)
+            previewViewController.setPersonName(text.uppercaseFirst)
             self.presentViewController(previewViewController, animated: true, completion: nil)
         }
     }

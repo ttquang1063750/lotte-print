@@ -22,6 +22,8 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         lbName.text = textName
+//        let imageGradient = UIImage(named: "textGradient.png")
+//        lbName.textColor = UIColor(patternImage: imageGradient!)
         // Do any additional setup after loading the view.
         card = Card(nibName:"Card", bundle: nil)
         card.view.frame = CGRectMake(0, 0, 465, 214)

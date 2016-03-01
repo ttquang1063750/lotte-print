@@ -29,7 +29,8 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="raa-BE-h7A">
                                 <rect key="frame" x="934" y="58" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="btnSetting"/>
+                                <state key="normal" image="btnSettingOff"/>
+                                <state key="highlighted" image="btnSettingOn"/>
                                 <connections>
                                     <action selector="btnSetting:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vhz-Og-5u0"/>
                                 </connections>
@@ -48,7 +49,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="btnSetting" width="32" height="32"/>
+        <image name="btnSettingOff" width="32" height="32"/>
+        <image name="btnSettingOn" width="32" height="32"/>
         <image name="btnStartOff" width="252" height="120"/>
         <image name="btnStartOn" width="252" height="120"/>
         <image name="home" width="1024" height="768"/>
