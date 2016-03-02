@@ -20,7 +20,17 @@ class InputView: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tfPersonName.delegate = self
-        // Do any additional setup after loading the view.
+        
+        let index = DataHelper.sharedInstance.getIncreaseIndex()
+        if index < 10{
+            personIndex.text = "00\(index)"
+        }else{
+            personIndex.text = "\(index)"
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         let index = DataHelper.sharedInstance.getIncreaseIndex()
         if index < 10{
             personIndex.text = "00\(index)"

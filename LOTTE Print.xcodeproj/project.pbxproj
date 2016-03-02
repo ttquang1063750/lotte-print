@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A94611951C867BD700803C36 /* SearchPrinterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94611931C867BD700803C36 /* SearchPrinterController.swift */; };
+		A94611961C867BD700803C36 /* SearchPrinterController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A94611941C867BD700803C36 /* SearchPrinterController.xib */; };
+		A94611981C86A1FA00803C36 /* Printer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94611971C86A1FA00803C36 /* Printer.swift */; };
+		A946119B1C86A52A00803C36 /* PrinterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94611991C86A52A00803C36 /* PrinterCell.swift */; };
+		A946119C1C86A52A00803C36 /* PrinterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A946119A1C86A52A00803C36 /* PrinterCell.xib */; };
+		A946119F1C86CDF300803C36 /* ヒラギノ角ゴ Pro W3.otf in Resources */ = {isa = PBXBuildFile; fileRef = A946119D1C86CDF300803C36 /* ヒラギノ角ゴ Pro W3.otf */; };
+		A94611A01C86CDF300803C36 /* ヒラギノ角ゴ Pro W6.otf in Resources */ = {isa = PBXBuildFile; fileRef = A946119E1C86CDF300803C36 /* ヒラギノ角ゴ Pro W6.otf */; };
+		A94611A31C86D7A400803C36 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94611A11C86D7A400803C36 /* PopupViewController.swift */; };
+		A94611A41C86D7A400803C36 /* PopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A94611A21C86D7A400803C36 /* PopupViewController.xib */; };
 		A9D51D0D1C747B950014F087 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D51D0C1C747B950014F087 /* AppDelegate.swift */; };
 		A9D51D0F1C747B950014F087 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D51D0E1C747B950014F087 /* ViewController.swift */; };
 		A9D51D121C747B950014F087 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9D51D101C747B950014F087 /* Main.storyboard */; };
@@ -27,6 +36,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A94611931C867BD700803C36 /* SearchPrinterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPrinterController.swift; sourceTree = "<group>"; };
+		A94611941C867BD700803C36 /* SearchPrinterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPrinterController.xib; sourceTree = "<group>"; };
+		A94611971C86A1FA00803C36 /* Printer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Printer.swift; sourceTree = "<group>"; };
+		A94611991C86A52A00803C36 /* PrinterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrinterCell.swift; sourceTree = "<group>"; };
+		A946119A1C86A52A00803C36 /* PrinterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrinterCell.xib; sourceTree = "<group>"; };
+		A946119D1C86CDF300803C36 /* ヒラギノ角ゴ Pro W3.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ヒラギノ角ゴ Pro W3.otf"; sourceTree = "<group>"; };
+		A946119E1C86CDF300803C36 /* ヒラギノ角ゴ Pro W6.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ヒラギノ角ゴ Pro W6.otf"; sourceTree = "<group>"; };
+		A94611A11C86D7A400803C36 /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
+		A94611A21C86D7A400803C36 /* PopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopupViewController.xib; sourceTree = "<group>"; };
 		A9D51D091C747B940014F087 /* LOTTE Print.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LOTTE Print.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9D51D0C1C747B950014F087 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9D51D0E1C747B950014F087 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +107,7 @@
 				A9D51D131C747B950014F087 /* Assets.xcassets */,
 				A9D51D151C747B950014F087 /* LaunchScreen.storyboard */,
 				A9D51D181C747B950014F087 /* Info.plist */,
+				A94611971C86A1FA00803C36 /* Printer.swift */,
 			);
 			path = "LOTTE Print";
 			sourceTree = "<group>";
@@ -102,6 +121,12 @@
 				A9D51D241C748AA50014F087 /* Preview.xib */,
 				A9D51D271C748DD80014F087 /* Card.swift */,
 				A9D51D281C748DD80014F087 /* Card.xib */,
+				A94611931C867BD700803C36 /* SearchPrinterController.swift */,
+				A94611941C867BD700803C36 /* SearchPrinterController.xib */,
+				A94611991C86A52A00803C36 /* PrinterCell.swift */,
+				A946119A1C86A52A00803C36 /* PrinterCell.xib */,
+				A94611A11C86D7A400803C36 /* PopupViewController.swift */,
+				A94611A21C86D7A400803C36 /* PopupViewController.xib */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -109,6 +134,8 @@
 		A9F039601C75847C00A36670 /* font */ = {
 			isa = PBXGroup;
 			children = (
+				A946119D1C86CDF300803C36 /* ヒラギノ角ゴ Pro W3.otf */,
+				A946119E1C86CDF300803C36 /* ヒラギノ角ゴ Pro W6.otf */,
 				A9F039611C75847C00A36670 /* completed-embed.pdf */,
 				A9F039621C75847C00A36670 /* GhanaPromoFont.otf */,
 				A9F039631C75847C00A36670 /* GhanaPromoFont.ttf */,
@@ -178,11 +205,16 @@
 				A9D51D171C747B950014F087 /* LaunchScreen.storyboard in Resources */,
 				A9F039661C75847C00A36670 /* GhanaPromoFont.ttf in Resources */,
 				A9F039641C75847C00A36670 /* completed-embed.pdf in Resources */,
+				A94611A41C86D7A400803C36 /* PopupViewController.xib in Resources */,
 				A9D51D2A1C748DD80014F087 /* Card.xib in Resources */,
 				A9D51D221C7485700014F087 /* InputView.xib in Resources */,
 				A9F039651C75847C00A36670 /* GhanaPromoFont.otf in Resources */,
+				A946119C1C86A52A00803C36 /* PrinterCell.xib in Resources */,
+				A94611961C867BD700803C36 /* SearchPrinterController.xib in Resources */,
 				A9D51D141C747B950014F087 /* Assets.xcassets in Resources */,
+				A94611A01C86CDF300803C36 /* ヒラギノ角ゴ Pro W6.otf in Resources */,
 				A9D51D261C748AA50014F087 /* Preview.xib in Resources */,
+				A946119F1C86CDF300803C36 /* ヒラギノ角ゴ Pro W3.otf in Resources */,
 				A9D51D121C747B950014F087 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,8 +232,12 @@
 				A9F0396A1C75A5C300A36670 /* DataHelper.swift in Sources */,
 				A9F0396C1C75B20000A36670 /* GvCommon.swift in Sources */,
 				A9D51D291C748DD80014F087 /* Card.swift in Sources */,
+				A94611981C86A1FA00803C36 /* Printer.swift in Sources */,
 				A9D51D251C748AA50014F087 /* Preview.swift in Sources */,
+				A946119B1C86A52A00803C36 /* PrinterCell.swift in Sources */,
+				A94611951C867BD700803C36 /* SearchPrinterController.swift in Sources */,
 				A9D51D0D1C747B950014F087 /* AppDelegate.swift in Sources */,
+				A94611A31C86D7A400803C36 /* PopupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

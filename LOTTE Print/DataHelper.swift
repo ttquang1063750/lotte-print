@@ -22,6 +22,7 @@ class DataHelper {
     
     private let INDEXING = "INDEXING"
     private let PRINTER_URL = "PRINTER_URL"
+    private let DATE_RESET = "DATE_RESET"
     
     
     func setCurrentPrinterUrl(url:NSURL){
@@ -52,6 +53,22 @@ class DataHelper {
     
     func getIncreaseIndex()->Int{
         return getCurrentIndex() + 1
+    }
+    
+    func resetIndexToOrigin()->String{
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(INDEXING)
+        return "001"
+    }
+    
+    func setDateReset(dateString:String){
+        NSUserDefaults.standardUserDefaults().setValue(dateString, forKey: DATE_RESET)
+    }
+    
+    func getDateReset()->String?{
+        if(NSUserDefaults.standardUserDefaults().valueForKey(DATE_RESET) == nil){
+            return nil
+        }
+        return NSUserDefaults.standardUserDefaults().stringForKey(DATE_RESET)
     }
     
     func synchronize(){

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPrinterPickerControllerDelegate {
+class ViewController: UIViewController {
     
     var lastPrinter:UIPrinter?
     override func viewDidLoad() {
@@ -35,37 +35,8 @@ class ViewController: UIViewController, UIPrinterPickerControllerDelegate {
     }
     
     @IBAction func btnSetting(sender: UIButton) {
-        dispatch_async(dispatch_get_main_queue(), {
-            if(NSFoundationVersionNumber > 7.1) {
-                if(DataHelper.sharedInstance.getCurrentPrinterURL() != nil){
-                    self.lastPrinter = UIPrinter(URL: DataHelper.sharedInstance.getCurrentPrinterURL()!)
-                }else{
-                    self.lastPrinter = UIPrinter(URL: NSURL(string: "ipps://quang.local.:8632/printers/test")!)
-                }
-                
-                self.lastPrinter?.contactPrinter({ (isAvailable) -> Void in
-                    let printPickerController = UIPrinterPickerController(initiallySelectedPrinter: self.lastPrinter)
-                    printPickerController.delegate = self
-                    printPickerController.presentFromRect(CGRectMake(0, 0, 80, 80), inView: self.view, animated: true, completionHandler: {
-                        (printPicker, userDidSelect, error) -> Void in
-                        // Print address of printer simulator that you choose
-                        if(userDidSelect){
-                            DataHelper.sharedInstance.setCurrentPrinterUrl(printPicker.selectedPrinter!.URL)
-                        }
-                    })
-                })
-            }
-        })
+        let searchPrinter = SearchPrinterController(nibName:"SearchPrinterController",bundle: nil)
+        self.presentViewController(searchPrinter, animated: true, completion: nil)
     }
-    
-    func printerPickerControllerParentViewController(printerPickerController: UIPrinterPickerController) -> UIViewController? {
-        return self
-    }
-    
-    func printerPickerController(printerPickerController: UIPrinterPickerController, shouldShowPrinter printer: UIPrinter) -> Bool {
-        print(printer)
-        return true
-    }
-
 }
 
