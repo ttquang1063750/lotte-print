@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A9356F2D1C88140D005DF37A /* GvAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9356F2C1C88140D005DF37A /* GvAlertView.swift */; };
+		A9356F2F1C88144D005DF37A /* SweetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9356F2E1C88144D005DF37A /* SweetAlert.swift */; };
+		A9356F311C883ECD005DF37A /* PrintPhotoPageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9356F301C883ECD005DF37A /* PrintPhotoPageRenderer.swift */; };
 		A94611951C867BD700803C36 /* SearchPrinterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94611931C867BD700803C36 /* SearchPrinterController.swift */; };
 		A94611961C867BD700803C36 /* SearchPrinterController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A94611941C867BD700803C36 /* SearchPrinterController.xib */; };
 		A94611981C86A1FA00803C36 /* Printer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94611971C86A1FA00803C36 /* Printer.swift */; };
@@ -36,6 +39,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A9356F2C1C88140D005DF37A /* GvAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GvAlertView.swift; sourceTree = "<group>"; };
+		A9356F2E1C88144D005DF37A /* SweetAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetAlert.swift; sourceTree = "<group>"; };
+		A9356F301C883ECD005DF37A /* PrintPhotoPageRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintPhotoPageRenderer.swift; sourceTree = "<group>"; };
 		A94611931C867BD700803C36 /* SearchPrinterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPrinterController.swift; sourceTree = "<group>"; };
 		A94611941C867BD700803C36 /* SearchPrinterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPrinterController.xib; sourceTree = "<group>"; };
 		A94611971C86A1FA00803C36 /* Printer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Printer.swift; sourceTree = "<group>"; };
@@ -108,6 +114,9 @@
 				A9D51D151C747B950014F087 /* LaunchScreen.storyboard */,
 				A9D51D181C747B950014F087 /* Info.plist */,
 				A94611971C86A1FA00803C36 /* Printer.swift */,
+				A9356F2E1C88144D005DF37A /* SweetAlert.swift */,
+				A9356F2C1C88140D005DF37A /* GvAlertView.swift */,
+				A9356F301C883ECD005DF37A /* PrintPhotoPageRenderer.swift */,
 			);
 			path = "LOTTE Print";
 			sourceTree = "<group>";
@@ -228,15 +237,18 @@
 			files = (
 				A9D51D211C7485700014F087 /* InputView.swift in Sources */,
 				A9FA6C111C85815600785FE3 /* GradientBackground.swift in Sources */,
+				A9356F311C883ECD005DF37A /* PrintPhotoPageRenderer.swift in Sources */,
 				A9D51D0F1C747B950014F087 /* ViewController.swift in Sources */,
 				A9F0396A1C75A5C300A36670 /* DataHelper.swift in Sources */,
 				A9F0396C1C75B20000A36670 /* GvCommon.swift in Sources */,
+				A9356F2F1C88144D005DF37A /* SweetAlert.swift in Sources */,
 				A9D51D291C748DD80014F087 /* Card.swift in Sources */,
 				A94611981C86A1FA00803C36 /* Printer.swift in Sources */,
 				A9D51D251C748AA50014F087 /* Preview.swift in Sources */,
 				A946119B1C86A52A00803C36 /* PrinterCell.swift in Sources */,
 				A94611951C867BD700803C36 /* SearchPrinterController.swift in Sources */,
 				A9D51D0D1C747B950014F087 /* AppDelegate.swift in Sources */,
+				A9356F2D1C88140D005DF37A /* GvAlertView.swift in Sources */,
 				A94611A31C86D7A400803C36 /* PopupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

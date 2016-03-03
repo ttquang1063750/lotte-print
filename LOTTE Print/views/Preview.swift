@@ -36,10 +36,15 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        createPDFfromUIView(card.view, aFilename: "card.pdf"){
-            pdfPath in
-            self.pdfPath = pdfPath
-        }
+//        createPDFfromUIView(card.view, aFilename: "card.jpg"){
+//            (error,pdfPath) in
+//            if(error == nil){
+//                self.pdfPath = pdfPath
+//            }else{
+//                self.confirmDialog(error)
+//            }
+//            
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,7 +85,12 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     }
     
     func printCard(){
-        self.printWithoutPanel(self.pdfPath, callback: {
+        //        self.printWithoutPanel(self.pdfPath, callback: {
+        //            (error) -> Void in
+        //            self.confirmDialog(error)
+        //        })
+        
+        self.printImage({
             (error) -> Void in
             self.confirmDialog(error)
         })
@@ -102,7 +112,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
 
 //Create PDF file from UIView
 extension Preview{
-    func createPDFfromUIView(aView:UIView, aFilename:String, callback:(pathName:NSURL)->Void){
+    func createPDFfromUIView(aView:UIView, aFilename:String, callback:(error:NSError?, pathName:NSURL)->Void){
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             // Creates a mutable data object for updating with binary data, like a byte array
             let pdfData = NSMutableData()
@@ -126,15 +136,85 @@ extension Preview{
             url = url?.URLByAppendingPathComponent(aFilename)
             
             //Lastly, write your file to the disk.
-            pdfData.writeToURL(url!, atomically: true)
+            let result = pdfData.writeToURL(url!, atomically: true)
             
             // instructs the mutable data object to write its context to a file on disk
-            callback(pathName: url!)
+            if(result){
+                callback(error:nil, pathName: url!)
+            }else{
+                callback(error:NSError(domain: "Can not create file", code: 500, userInfo: nil), pathName:url!)
+            }
         })
         
     }
 }
 
+//Create PDF file from UIView
+extension Preview{
+    func createPhotofromUIView(view:UIView, aFilename:String, callback:(error:NSError?, pathName:NSURL)->Void){
+        
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0)
+        view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        // Retrieves the document directories from the iOS device
+        //Get the local docs directory and append your local filename.
+        var url = (NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)).last
+        
+        url = url?.URLByAppendingPathComponent(aFilename)
+        
+        //Lastly, write your file to the disk.
+        let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
+        let result = jpgImageData!.writeToURL(url!, atomically: true)
+        // instructs the mutable data object to write its context to a file on disk
+        if(result){
+            callback(error:nil, pathName: url!)
+        }else{
+            callback(error:NSError(domain: "Can not create image file", code: 500, userInfo: nil), pathName:url!)
+        }
+    }
+}
+
+//Print file without show print option
+extension Preview{
+    func printImage(callback:((error:NSError?)->Void)?) {
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            UIGraphicsBeginImageContextWithOptions(self.card.view.bounds.size, self.card.view.opaque, 0.0)
+            self.card.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+            let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            let printController = UIPrintInteractionController.sharedPrintController()
+            let printInfo = UIPrintInfo.printInfo()
+            printInfo.outputType = UIPrintInfoOutputType.General
+            printController.printInfo = printInfo
+            printController.showsPageRange = false
+            printController.printingItem = nil
+            if(image.size.width > image.size.height){
+                printInfo.orientation = UIPrintInfoOrientation.Landscape
+            }
+            
+            let pageRenderer = PrintPhotoPageRenderer()
+            pageRenderer.imageToPrint = image
+            printController.printPageRenderer = pageRenderer
+            
+            // Create printer information
+            let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()
+            if(printerURL == nil){
+                callback?(error: NSError(domain: "The printer url not found. Please go to setting to reconnect printer again", code: 500, userInfo: nil))
+            }else{
+                
+                let printer = UIPrinter(URL: printerURL!)
+                // I will print without printer panel this here.
+                printController.printToPrinter(printer, completionHandler: {
+                    (printer, b, error) -> Void in
+                    callback?(error: error)
+                })
+            }
+        })
+        
+    }
+}
 
 //Print file without show print option
 extension Preview{
@@ -144,10 +224,10 @@ extension Preview{
             if (UIPrintInteractionController.canPrintData(myData!) ) {
                 let printController = UIPrintInteractionController.sharedPrintController()
                 let printInfo = UIPrintInfo.printInfo()
-                printInfo.outputType = UIPrintInfoOutputType.Photo
-                printController.printInfo = printInfo;
-                printController.showsPageRange = false;
-                printController.printingItem = myData;
+                printInfo.outputType = UIPrintInfoOutputType.General
+                printController.printInfo = printInfo
+                printController.showsPageRange = false
+                printController.printingItem = myData
                 
                 // Create printer information
                 let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()

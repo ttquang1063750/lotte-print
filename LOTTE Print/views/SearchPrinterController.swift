@@ -73,7 +73,7 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func getPrinter() {
-        dataPrinter = [Printer]()
+        dataPrinter.removeAll()
         self.tbListPrinter.reloadData()
         self.indicator.startAnimating()
         self.btnReSearchPrinter.hidden = true
