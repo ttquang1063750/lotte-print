@@ -17,14 +17,14 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     var lastPrinter:UIPrinter?
     var textName = ""
     var card:Card!
-    var pdfPath:NSURL!
+    var image:UIImage?
     override func viewDidLoad() {
         super.viewDidLoad()
         lbName.text = textName
         
         //Create view print
         card = Card(nibName:"Card", bundle: nil)
-        card.view.frame = CGRectMake(0, 0, 465, 214)
+        card.view.frame = CGRectMake(0, 0, 595, 842)
         card.setPersonName(textName)
         card.loadViewIfNeeded()
         
@@ -36,6 +36,14 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            self.createPhotofromUIView(self.card.view, aFilename: "card.jpg") {
+                (error, pathName) -> Void in
+                if(error != nil){
+                    self.image = UIImage(data: NSData(contentsOfURL: pathName)!)
+                }
+            }
+        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -98,14 +106,9 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
 //Print image
 extension Preview{
     func printImage(callback:((error:NSError?)->Void)?) {
+        if(self.image != nil){
         dispatch_async(dispatch_get_main_queue(), {
-            
-            //Convert UIView to UIImage
-            UIGraphicsBeginImageContextWithOptions(self.card.view.bounds.size, self.card.view.opaque, 0.0)
-            self.card.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-            let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
+
             //Init printer inteface controller
             let printController = UIPrintInteractionController.sharedPrintController()
             
@@ -114,17 +117,7 @@ extension Preview{
             printInfo.outputType = UIPrintInfoOutputType.General
             printController.printInfo = printInfo
             printController.showsPageRange = false
-            printController.printingItem = nil
-            if(image.size.width > image.size.height){
-                printInfo.orientation = UIPrintInfoOrientation.Landscape
-            }
-            
-            
-            //Render view image in page setup
-            let pageRenderer = PrintPhotoPageRenderer()
-            pageRenderer.imageToPrint = image
-            printController.printPageRenderer = pageRenderer
-            
+            printController.printingItem = self.image
             
             // Get last url of printer
             let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()
@@ -140,6 +133,7 @@ extension Preview{
                 })
             }
         })
+        }
         
     }
 }
@@ -188,20 +182,30 @@ extension Preview{
 extension Preview{
     func createPhotofromUIView(view:UIView, aFilename:String, callback:(error:NSError?, pathName:NSURL)->Void){
         
+        //Convert UIView to UIImage
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0)
         view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        // Retrieves the document directories from the iOS device
-        //Get the local docs directory and append your local filename.
-        var url = (NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)).last
+
         
+        //Create image path to document folder
+        var url = (NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)).last
         url = url?.URLByAppendingPathComponent(aFilename)
         
+        let pathExtention = url!.pathExtension
+        var result = false
+        
         //Lastly, write your file to the disk.
-        let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
-        let result = jpgImageData!.writeToURL(url!, atomically: true)
-        // instructs the mutable data object to write its context to a file on disk
+        if(pathExtention == "png"){
+            let pngImageData = UIImagePNGRepresentation(image)
+            result = pngImageData!.writeToURL(url!, atomically: true)
+        }else{
+            let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
+            result = jpgImageData!.writeToURL(url!, atomically: true)
+        }
+
+        //Check status file writed and set callback
         if(result){
             callback(error:nil, pathName: url!)
         }else{

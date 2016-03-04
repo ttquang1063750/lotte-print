@@ -92,7 +92,6 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
             self.lbPrinterName.text = printer.getPrinterName()
         }
         self.dataPrinter.append(printer)
-        self.tbListPrinter.reloadData()
         return true
     }
     
@@ -100,6 +99,7 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
         printerPickerController.dismissAnimated(false)
         self.indicator.stopAnimating()
         self.btnReSearchPrinter.hidden = false
+        self.tbListPrinter.reloadData()
     }
     
     @IBAction func btnClose(sender: UIButton) {
