@@ -95,6 +95,55 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     
 }
 
+//Print image
+extension Preview{
+    func printImage(callback:((error:NSError?)->Void)?) {
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            //Convert UIView to UIImage
+            UIGraphicsBeginImageContextWithOptions(self.card.view.bounds.size, self.card.view.opaque, 0.0)
+            self.card.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+            let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            //Init printer inteface controller
+            let printController = UIPrintInteractionController.sharedPrintController()
+            
+            //Setting printer
+            let printInfo = UIPrintInfo.printInfo()
+            printInfo.outputType = UIPrintInfoOutputType.General
+            printController.printInfo = printInfo
+            printController.showsPageRange = false
+            printController.printingItem = nil
+            if(image.size.width > image.size.height){
+                printInfo.orientation = UIPrintInfoOrientation.Landscape
+            }
+            
+            
+            //Render view image in page setup
+            let pageRenderer = PrintPhotoPageRenderer()
+            pageRenderer.imageToPrint = image
+            printController.printPageRenderer = pageRenderer
+            
+            
+            // Get last url of printer
+            let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()
+            if(printerURL == nil){
+                callback?(error: NSError(domain: "The printer url not found. Please go to setting to reconnect printer again", code: 500, userInfo: nil))
+            }else{
+                
+                let printer = UIPrinter(URL: printerURL!)
+                // I will print without printer panel this here.
+                printController.printToPrinter(printer, completionHandler: {
+                    (printer, b, error) -> Void in
+                    callback?(error: error)
+                })
+            }
+        })
+        
+    }
+}
+
 
 //Create PDF file from UIView
 extension Preview{
@@ -161,59 +210,7 @@ extension Preview{
     }
 }
 
-//Print image
-extension Preview{
-    func printImage(callback:((error:NSError?)->Void)?) {
-        dispatch_async(dispatch_get_main_queue(), {
-            
-            //Convert UIView to UIImage
-            UIGraphicsBeginImageContextWithOptions(self.card.view.bounds.size, self.card.view.opaque, 0.0)
-            self.card.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-            let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
-            //Init printer inteface controller
-            let printController = UIPrintInteractionController.sharedPrintController()
-            
-            //Setting printer
-            let printInfo = UIPrintInfo.printInfo()
-            printInfo.outputType = UIPrintInfoOutputType.General
-            printInfo.duplex = UIPrintInfoDuplex.None
-            printController.printInfo = printInfo
-            printController.showsPageRange = false
-            printController.printingItem = nil
-            if(image.size.width > image.size.height){
-                printInfo.orientation = UIPrintInfoOrientation.Landscape
-            }else{
-                printInfo.orientation = UIPrintInfoOrientation.Portrait
-            }
-            
-            
-            //Render view image in page setup
-            let pageRenderer = PrintPhotoPageRenderer()
-            pageRenderer.imageToPrint = image
-            printController.printPageRenderer = pageRenderer
-            
-            
-            // Get last url of printer
-            let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()
-            if(printerURL == nil){
-                callback?(error: NSError(domain: "The printer url not found. Please go to setting to reconnect printer again", code: 500, userInfo: nil))
-            }else{
-                
-                let printer = UIPrinter(URL: printerURL!)
-                // I will print without printer panel this here.
-                printController.printToPrinter(printer, completionHandler: {
-                    (printer, b, error) -> Void in
-                    callback?(error: error)
-                })
-            }
-        })
-        
-    }
-}
-
-//Print file without show print option
+//Print file from url
 extension Preview{
     func printWithoutPanel(dataUrl:NSURL, callback:((error:NSError?)->Void)?) {
         dispatch_async(dispatch_get_main_queue(), {
