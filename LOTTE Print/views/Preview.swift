@@ -36,15 +36,6 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-//        createPDFfromUIView(card.view, aFilename: "card.jpg"){
-//            (error,pdfPath) in
-//            if(error == nil){
-//                self.pdfPath = pdfPath
-//            }else{
-//                self.confirmDialog(error)
-//            }
-//            
-//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -85,11 +76,6 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     }
     
     func printCard(){
-        //        self.printWithoutPanel(self.pdfPath, callback: {
-        //            (error) -> Void in
-        //            self.confirmDialog(error)
-        //        })
-        
         self.printImage({
             (error) -> Void in
             self.confirmDialog(error)
@@ -175,30 +161,41 @@ extension Preview{
     }
 }
 
-//Print file without show print option
+//Print image
 extension Preview{
     func printImage(callback:((error:NSError?)->Void)?) {
         dispatch_async(dispatch_get_main_queue(), {
             
+            //Convert UIView to UIImage
             UIGraphicsBeginImageContextWithOptions(self.card.view.bounds.size, self.card.view.opaque, 0.0)
             self.card.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
             let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
+            
+            //Init printer inteface controller
             let printController = UIPrintInteractionController.sharedPrintController()
+            
+            //Setting printer
             let printInfo = UIPrintInfo.printInfo()
             printInfo.outputType = UIPrintInfoOutputType.General
+            printInfo.duplex = UIPrintInfoDuplex.None
             printController.printInfo = printInfo
             printController.showsPageRange = false
             printController.printingItem = nil
             if(image.size.width > image.size.height){
                 printInfo.orientation = UIPrintInfoOrientation.Landscape
+            }else{
+                printInfo.orientation = UIPrintInfoOrientation.Portrait
             }
             
+            
+            //Render view image in page setup
             let pageRenderer = PrintPhotoPageRenderer()
             pageRenderer.imageToPrint = image
             printController.printPageRenderer = pageRenderer
             
-            // Create printer information
+            
+            // Get last url of printer
             let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()
             if(printerURL == nil){
                 callback?(error: NSError(domain: "The printer url not found. Please go to setting to reconnect printer again", code: 500, userInfo: nil))

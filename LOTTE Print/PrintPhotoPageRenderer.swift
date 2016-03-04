@@ -15,10 +15,9 @@ class PrintPhotoPageRenderer: UIPrintPageRenderer {
     
     override func drawPageAtIndex(pageIndex: Int, inRect printableRect: CGRect){
         if(self.imageToPrint != nil){
-            let x:CGFloat = 12.0
-            let y:CGFloat = 12.0
-            let finalRect = CGRectMake(x, y, printableRect.size.width, printableRect.size.height)
-            self.imageToPrint.drawInRect(finalRect)
+            self.imageToPrint.drawInRect(self.paperRect)
         }
     }
+    
+    
 }
