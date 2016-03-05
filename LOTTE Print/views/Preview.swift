@@ -36,14 +36,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-            self.createPhotofromUIView(self.card.view, aFilename: "card.jpg") {
-                (error, pathName) -> Void in
-                if(error != nil){
-                    self.image = UIImage(data: NSData(contentsOfURL: pathName)!)
-                }
-            }
-        })
+        self.image = self.createUIInage(self.card.view)
     }
     
     override func didReceiveMemoryWarning() {
@@ -180,13 +173,22 @@ extension Preview{
 
 //Create PDF file from UIView
 extension Preview{
-    func createPhotofromUIView(view:UIView, aFilename:String, callback:(error:NSError?, pathName:NSURL)->Void){
-        
+    func createUIInage(view:UIView)->UIImage{
         //Convert UIView to UIImage
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0)
         view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        return image
+    }
+}
+
+//Create PDF file from UIView
+extension Preview{
+    func createPhotofromUIView(view:UIView, aFilename:String, callback:(error:NSError?, pathName:NSURL)->Void){
+        
+        //Convert UIView to UIImage
+        let image = createUIInage(view)
 
         
         //Create image path to document folder
