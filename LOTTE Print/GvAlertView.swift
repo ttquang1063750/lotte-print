@@ -11,27 +11,24 @@ import UIKit
 public class GvAlertView: UIViewController {
 
     let kBackgroundTransparentcy:CGFloat = 0.7
-    let kHeightMargin:CGFloat = 10.0
-    let kTopMargin:CGFloat = 20.0
-    let kMaxHeight:CGFloat = 300.0
-    var kContentWidth:CGFloat = 300.0
-    let kButtonHeight:CGFloat = 35.0
-    let kTitleHeight:CGFloat = 30.0
-    var textViewHeight:CGFloat = 90.0
+ 
+    let kTopMargin:CGFloat = 40.0
+    let kMaxHeight:CGFloat = 200.0
+    var kContentWidth:CGFloat = 400.0
+    let kButtonHeight:CGFloat = 51.0
+    let kButtonWidth:CGFloat = 125.0
+    let kTitleHeight:CGFloat = 20.0
     var strongSelf:GvAlertView?
     var contentView = UIView()
-    var titleLabel:UILabel = UILabel()
+    var titleImageView:UIImageView = UIImageView()
     var buttons:[UIButton] = []
-    var subTitleView = UITextView()
-    var userAction:((isOtherButton:Bool)->Void)? = nil
-    var fontName = "Helvetical"
+    var userAction:((btnIndex:Int)->Void)? = nil
     
     
     //Init View
     init(){
         super.init(nibName: nil, bundle: nil)
         self.view.frame = UIScreen.mainScreen().bounds
-        self.view.autoresizingMask = [UIViewAutoresizing.FlexibleHeight,UIViewAutoresizing.FlexibleWidth]
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: kBackgroundTransparentcy)
         self.view.addSubview(contentView)
         strongSelf = self
