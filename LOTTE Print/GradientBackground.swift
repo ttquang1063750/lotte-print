@@ -26,8 +26,8 @@ class GradientBackground: NSObject {
         let rgbColorspace:CGColorSpaceRef
         let num_locations:size_t = 2
         let locations:[CGFloat] = [ 0.0, 1.0 ]
-        let components:[CGFloat] = [ (252/255), (221/255), (120/255), 0.85,  // Start color
-            (252/255), (221/255), (120/255), 0.95] // End color
+        let components:[CGFloat] = [ (189/255), (165/255), (91/255), 1.0,  // Start color
+            (252/255), (221/255), (120/255), 1.0] // End color
 
         rgbColorspace = CGColorSpaceCreateDeviceRGB()!
         glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations)!

@@ -20,7 +20,6 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
     var lastUrl = DataHelper.sharedInstance.getCurrentPrinterURL()
     var dataPrinter = [Printer]()
     var isAppeared = false
-    var popupViewController:PopupViewController!
     
     
     override func viewDidLoad() {
@@ -36,12 +35,7 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
         }else{
             self.lbIndex.text = "\(index)"
         }
-        
-        popupViewController = PopupViewController(nibName:"PopupViewController",bundle: nil)
-        popupViewController.view.hidden = true
-        popupViewController.view.alpha = 0.0
-        self.addChildViewController(popupViewController)
-        self.view.addSubview(popupViewController.view)
+    
         
         //Get current date reseted
         let dateString = DataHelper.sharedInstance.getDateReset()
@@ -73,15 +67,16 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func getPrinter() {
-        dataPrinter.removeAll()
-        self.tbListPrinter.reloadData()
-        self.indicator.startAnimating()
-        self.btnReSearchPrinter.hidden = true
         dispatch_async(dispatch_get_main_queue(), {
-            if(NSFoundationVersionNumber > 7.1) {
-                let printPickerController = UIPrinterPickerController(initiallySelectedPrinter: nil)
-                printPickerController.delegate = self
-                printPickerController.presentFromRect(self.view.bounds, inView: self.view, animated: true, completionHandler: nil)            }
+            print("===cal getPrinter===")
+            self.dataPrinter.removeAll()
+            self.tbListPrinter.reloadData()
+            self.indicator.startAnimating()
+            self.btnReSearchPrinter.hidden = true
+            let printPickerController = UIPrinterPickerController(initiallySelectedPrinter: nil)
+            print(printPickerController)
+            printPickerController.delegate = self
+            printPickerController.presentFromRect(CGRectMake(0, 0, 2048, 2048), inView: self.view, animated: true, completionHandler: nil)
         })
     }
     
@@ -92,6 +87,7 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
             self.lbPrinterName.text = printer.getPrinterName()
         }
         self.dataPrinter.append(printer)
+        print("==Printer Item:\(printer)==")
         return true
     }
     
@@ -100,6 +96,7 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
         self.indicator.stopAnimating()
         self.btnReSearchPrinter.hidden = false
         self.tbListPrinter.reloadData()
+        print("==Printer count: \(self.dataPrinter.count)")
     }
     
     @IBAction func btnClose(sender: UIButton) {
@@ -107,16 +104,17 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @IBAction func btnReset(sender: UIButton) {
-        popupViewController.view.hidden = false
-        UIView.animateWithDuration(0.5, animations: {
-            () -> Void in
-                self.popupViewController.view.alpha = 1.0
-            }, completion: nil)
+        GvAlertView().showDialog("title_confirm_reset.png", isBtnCancel: true, bgImageName:"bg_dialog.png") {
+            (btnIndex) -> Void in
+            
+            //btnIndex 0: ok, 1: cancel
+            if(btnIndex == 0){
+                self.setResetOk()
+            }
+        }
     }
     
     func setResetOk(){
-        popupViewController.view.hidden = true
-        popupViewController.view.alpha = 0.0
         self.lbIndex.text = DataHelper.sharedInstance.resetIndexToOrigin()
         
         let date = NSDate()
@@ -126,11 +124,6 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
         self.setDateReset(dateString)
     }
     
-    
-    func setResetCancel(){
-        popupViewController.view.hidden = true
-        popupViewController.view.alpha = 0.0
-    }
     
     func setDateReset(dateString:String){
         self.lbDateReset.hidden = false
