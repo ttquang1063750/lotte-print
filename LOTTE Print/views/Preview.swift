@@ -81,14 +81,19 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
             (error) -> Void in
             self.confirmDialog(error)
         })
+      
+//      self.saveImage(self.image!,callback: {
+//        (error, path) -> Void in
+//        self.confirmDialog(error)
+//      })
     }
-    
+  
     
     func confirmDialog(error:NSError?){
         if(error == nil){
             setCountIndex()
         }else{
-            let dialog = UIAlertController(title: "Error", message: error?.domain, preferredStyle: UIAlertControllerStyle.Alert)
+            let dialog = UIAlertController(title: "接続エラー", message: error?.domain, preferredStyle: UIAlertControllerStyle.Alert)
             dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
             self.presentViewController(dialog, animated: true, completion: nil)
         }
@@ -115,7 +120,7 @@ extension Preview{
             // Get last url of printer
             let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()
             if(printerURL == nil){
-                callback?(error: NSError(domain: "The printer url not found. Please go to setting to reconnect printer again", code: 500, userInfo: nil))
+                callback?(error: NSError(domain: "プリンターに接続できませんでした。設定画面よりプリンターが設定されているか確認してください。", code: 500, userInfo: nil))
             }else{
                 
                 let printer = UIPrinter(URL: printerURL!)
@@ -214,6 +219,25 @@ extension Preview{
             callback(error:NSError(domain: "Can not create image file", code: 500, userInfo: nil), pathName:url!)
         }
     }
+}
+
+//Save image file
+extension Preview{
+  func saveImage(image:UIImage, callback:(error:NSError?, pathName:NSURL)->Void){
+    //Create image path to document folder
+    let url = (NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)).last
+    let urlJpg = url?.URLByAppendingPathComponent("card.jpg")
+    let urlPng = url?.URLByAppendingPathComponent("card.png")
+    
+    
+    let pngImageData = UIImagePNGRepresentation(image)
+    pngImageData!.writeToURL(urlPng!, atomically: true)
+    let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
+    jpgImageData!.writeToURL(urlJpg!, atomically: true)
+    
+    //Check status file writed and set callback
+    callback(error:NSError(domain: "Created Image", code: 500, userInfo: nil), pathName:url!)
+  }
 }
 
 //Print file from url

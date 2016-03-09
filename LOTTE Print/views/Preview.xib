@@ -47,6 +47,7 @@
                     <rect key="frame" x="743" y="585" width="202" height="104"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="btnFinishedOff"/>
+                    <state key="disabled" image="btnOkDiable"/>
                     <state key="highlighted" image="btnFinishedOn"/>
                     <connections>
                         <action selector="btnFinished:" destination="-1" eventType="touchUpInside" id="f5I-8v-bVI"/>
@@ -75,6 +76,7 @@
         <image name="btnBackOff" width="202" height="104"/>
         <image name="btnFinishedOff" width="202" height="104"/>
         <image name="btnFinishedOn" width="202" height="104"/>
+        <image name="btnOkDiable" width="404" height="208"/>
         <image name="btnPrintOff" width="223" height="120"/>
         <image name="btnPrintOn" width="223" height="120"/>
         <image name="preview" width="1024" height="768"/>
