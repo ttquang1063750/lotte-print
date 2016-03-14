@@ -23,18 +23,9 @@ class Card: UIViewController {
     
     func setPersonName(name:String){
         self.mName.text = name
-    }
-    
-    class var sharedInstance: Card {
-        struct Static {
-            static var instance: Card?
-            static var token: dispatch_once_t = 0
-        }
-        dispatch_once(&Static.token) {
-            Static.instance = Card(nibName:"Card", bundle: nil)
-            Static.instance!.view.frame = CGRectMake(0, 0, 465, 214)
-        }
-        return Static.instance!
+        //Set color for text name
+        let image = GradientBackground.gradientImage(self.mName.bounds.size)
+        self.mName.textColor = UIColor(patternImage: image)
     }
 
 }
