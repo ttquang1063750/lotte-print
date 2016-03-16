@@ -44,12 +44,13 @@
                             <rect key="frame" x="231" y="393" width="562" height="79"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="49"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="alphabet"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rQX-1r-wBQ" userLabel="back">
                             <rect key="frame" x="80" y="585" width="202" height="104"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="btnBackOff"/>
+                            <state key="selected" image="btnBackOn"/>
                             <state key="highlighted" image="btnBackOn"/>
                             <connections>
                                 <action selector="goBack:" destination="-1" eventType="touchUpInside" id="jjx-ZU-Y9j"/>
@@ -60,6 +61,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="btnOkOff"/>
                             <state key="disabled" image="btnOkDiable"/>
+                            <state key="selected" image="btnOkOn"/>
                             <state key="highlighted" image="btnOkOn"/>
                             <connections>
                                 <action selector="submitForm:" destination="-1" eventType="touchUpInside" id="m6U-CO-08m"/>

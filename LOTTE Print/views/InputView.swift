@@ -77,6 +77,13 @@ class InputView: UIViewController, UITextFieldDelegate {
   
   func textFieldShouldReturn(textField: UITextField) -> Bool {
     textField.resignFirstResponder()
+    if (Regex().addPattern("\\d|\\W|[\\u3040-\\u309F]").test(textField.text!)) {
+      let dialog = UIAlertController(title: "接続エラー", message: "平仮名や絵文字を入力できないようにする", preferredStyle: UIAlertControllerStyle.Alert)
+      dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+      self.presentViewController(dialog, animated: true, completion: {
+        self.btnOk.enabled = false
+      })
+    }
     return true
   }
   
@@ -95,4 +102,23 @@ class InputView: UIViewController, UITextFieldDelegate {
     return newLength <= 8
   }
   
+}
+
+class Regex {
+  var internalExpression: NSRegularExpression?
+  var pattern: String?
+  
+  func addPattern(pattern: String)->Regex{
+    do{
+      self.pattern = pattern
+      self.internalExpression = try NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
+    }catch{
+    }
+    return self
+  }
+  
+  func test(input: String) -> Bool {
+    let matches = self.internalExpression!.matchesInString(input, options: NSMatchingOptions.WithTransparentBounds, range: NSMakeRange(0, input.characters.count))
+    return matches.count > 0
+  }
 }

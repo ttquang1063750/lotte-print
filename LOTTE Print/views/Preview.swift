@@ -13,6 +13,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     
     @IBOutlet weak var lbName: UILabel!
     @IBOutlet weak var mBtnPrint: UIButton!
+  @IBOutlet weak var btnFinished: UIButton!
     
     var lastPrinter:UIPrinter?
     var textName = ""
@@ -21,7 +22,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         lbName.text = textName
-        
+        self.btnFinished.enabled = false
         //Create view print
         card = Card(nibName:"Card", bundle: nil)
         card.view.frame = CGRectMake(0, 0, 595, 842)
@@ -63,6 +64,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     
     //Button finished page
     @IBAction func btnFinished(sender: UIButton) {
+        setCountIndex()
         self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -91,7 +93,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     
     func confirmDialog(error:NSError?){
         if(error == nil){
-            setCountIndex()
+          self.btnFinished.enabled = true
         }else{
             let dialog = UIAlertController(title: "接続エラー", message: error?.domain, preferredStyle: UIAlertControllerStyle.Alert)
             dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))

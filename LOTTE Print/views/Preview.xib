@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Preview" customModule="LOTTE_Print" customModuleProvider="target">
             <connections>
+                <outlet property="btnFinished" destination="y38-A5-7fc" id="b7y-Ta-o8r"/>
                 <outlet property="lbName" destination="cdv-zx-0GY" id="bwX-Ql-JET"/>
                 <outlet property="mBtnPrint" destination="f3Z-pz-Q2F" id="TJP-6H-OtN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -30,6 +31,8 @@
                     <rect key="frame" x="80" y="585" width="202" height="104"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="btnBackOff"/>
+                    <state key="selected" image="btnBackOn"/>
+                    <state key="highlighted" image="btnBackOn"/>
                     <connections>
                         <action selector="btnBack:" destination="-1" eventType="touchUpInside" id="FuQ-zj-cei"/>
                     </connections>
@@ -47,7 +50,8 @@
                     <rect key="frame" x="743" y="585" width="202" height="104"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="btnFinishedOff"/>
-                    <state key="disabled" image="btnOkDiable"/>
+                    <state key="disabled" image="btnFinishedDisable"/>
+                    <state key="selected" image="btnFinishedOn"/>
                     <state key="highlighted" image="btnFinishedOn"/>
                     <connections>
                         <action selector="btnFinished:" destination="-1" eventType="touchUpInside" id="f5I-8v-bVI"/>
@@ -74,9 +78,10 @@
     </objects>
     <resources>
         <image name="btnBackOff" width="202" height="104"/>
+        <image name="btnBackOn" width="202" height="104"/>
+        <image name="btnFinishedDisable" width="202" height="104"/>
         <image name="btnFinishedOff" width="202" height="104"/>
         <image name="btnFinishedOn" width="202" height="104"/>
-        <image name="btnOkDiable" width="404" height="208"/>
         <image name="btnPrintOff" width="223" height="120"/>
         <image name="btnPrintOn" width="223" height="120"/>
         <image name="preview" width="1024" height="768"/>
