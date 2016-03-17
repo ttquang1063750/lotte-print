@@ -78,7 +78,7 @@ class InputView: UIViewController, UITextFieldDelegate {
   func textFieldDidEndEditing(textField: UITextField) {
     scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
 
-    if (Regex().addPattern("\\d|\\W|[\\u3040-\\u309F]").test(textField.text!)) {
+    if (isInValid(textField.text!)) {
       let dialog = UIAlertController(title: "接続エラー", message: "平仮名や絵文字を入力できないようにする", preferredStyle: UIAlertControllerStyle.Alert)
       dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
       self.presentViewController(dialog, animated: true, completion: {
@@ -102,7 +102,7 @@ class InputView: UIViewController, UITextFieldDelegate {
     }
     let newLength = currentCharacterCount + string.characters.count - range.length
     if(newLength > 0){
-      if (Regex().addPattern("\\d|\\W|[\\u3040-\\u309F]").test(textField.text! + string)) {
+      if (isInValid(textField.text! + string)) {
         self.btnOk.enabled = false
       }else{
         self.btnOk.enabled = true
@@ -113,6 +113,9 @@ class InputView: UIViewController, UITextFieldDelegate {
     return newLength <= 8
   }
   
+  func isInValid(text:String)->Bool{
+    return Regex().addPattern("\\d|\\W|[\\u3040-\\u309F]").test(text)
+  }
 }
 
 class Regex {
