@@ -30,8 +30,8 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ghana" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="uTi-7Q-Gdq">
-                    <rect key="frame" x="67" y="309" width="465" height="119"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quang" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.55000000000000004" id="uTi-7Q-Gdq">
+                    <rect key="frame" x="92" y="308" width="405" height="119"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="102"/>
                     <color key="textColor" red="0.81176470588235294" green="0.67843137254901964" blue="0.12156862745098039" alpha="1" colorSpace="calibratedRGB"/>
@@ -40,7 +40,7 @@
                     <size key="shadowOffset" width="2" height="2"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0001" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ds5-lJ-zos">
-                    <rect key="frame" x="74" y="693" width="447" height="19"/>
+                    <rect key="frame" x="74" y="722" width="447" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HiraKakuPro-W6" family="Hiragino Kaku Gothic Pro" pointSize="15"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

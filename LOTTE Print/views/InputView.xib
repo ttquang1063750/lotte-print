@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputView" customModule="LOTTE_Print" customModuleProvider="target">
             <connections>
                 <outlet property="btnOk" destination="9tR-1F-7aB" id="1aB-Zc-dCr"/>
+                <outlet property="imgInputView" destination="qMQ-v4-h29" id="HzC-sG-QIA"/>
                 <outlet property="personIndex" destination="kdB-Ck-gbh" id="rY4-ve-7Oi"/>
                 <outlet property="scrollView" destination="z0o-lc-ejF" id="r9m-ye-rQG"/>
                 <outlet property="tfPersonName" destination="KpL-e7-eLW" id="BfC-hz-NRg"/>

@@ -14,6 +14,7 @@ class InputView: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var personIndex: UILabel!
   @IBOutlet weak var tfPersonName: UITextField!
   @IBOutlet weak var btnOk: UIButton!
+  @IBOutlet weak var imgInputView: UIImageView!
   
   
   
@@ -28,6 +29,10 @@ class InputView: UIViewController, UITextFieldDelegate {
     }else{
       personIndex.text = "\(index)"
     }
+    
+    let tap = UITapGestureRecognizer(target: self, action: Selector("hideKeyBoard"))
+    imgInputView.addGestureRecognizer(tap)
+    imgInputView.userInteractionEnabled = true
     
   }
   
@@ -55,7 +60,12 @@ class InputView: UIViewController, UITextFieldDelegate {
     return true
   }
   
+  func hideKeyBoard(){
+    tfPersonName.resignFirstResponder()
+  }
+  
   @IBAction func goBack(sender: UIButton) {
+    hideKeyBoard()
     self.dismissViewControllerAnimated(true, completion: nil)
   }
   
@@ -63,7 +73,7 @@ class InputView: UIViewController, UITextFieldDelegate {
   @IBAction func submitForm(sender: UIButton) {
     if let text = tfPersonName.text where !text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).isEmpty
     {
-      tfPersonName.resignFirstResponder()
+      hideKeyBoard()
       let previewViewController = Preview(nibName:"Preview", bundle: nil)
       previewViewController.setPersonName(text.uppercaseFirst)
       self.presentViewController(previewViewController, animated: true, completion: nil)
@@ -79,13 +89,14 @@ class InputView: UIViewController, UITextFieldDelegate {
     scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
 
     if (isInValid(textField.text!)) {
-      let dialog = UIAlertController(title: "接続エラー", message: "平仮名や絵文字を入力できないようにする", preferredStyle: UIAlertControllerStyle.Alert)
+      let dialog = UIAlertController(title: "接続エラー", message: "半角英数字で入力してください", preferredStyle: UIAlertControllerStyle.Alert)
       dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
       self.presentViewController(dialog, animated: true, completion: {
         self.btnOk.enabled = false
       })
     }else{
       self.btnOk.enabled = true
+      textField.text! = textField.text!.lowercaseString
     }
   }
   
@@ -95,14 +106,15 @@ class InputView: UIViewController, UITextFieldDelegate {
   }
   
   func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-    
     let currentCharacterCount = textField.text?.characters.count ?? 0
     if (range.length + range.location > currentCharacterCount){
       return false
     }
     let newLength = currentCharacterCount + string.characters.count - range.length
     if(newLength > 0){
-      if (isInValid(textField.text! + string)) {
+      textField.text! = textField.text!.lowercaseString
+      let text = String(textField.text! + string).lowercaseString
+      if (isInValid(text)) {
         self.btnOk.enabled = false
       }else{
         self.btnOk.enabled = true
