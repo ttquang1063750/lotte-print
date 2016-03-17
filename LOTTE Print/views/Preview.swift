@@ -23,10 +23,27 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
         super.viewDidLoad()
         lbName.text = textName
         self.btnFinished.enabled = false
+      
+        //Get indext
+      let index = DataHelper.sharedInstance.getIncreaseIndex()
+      var currentIndex = ""
+      if index < 10{
+        currentIndex = "000\(index)"
+      }else{
+        if(index < 100){
+          currentIndex = "00\(index)"
+        }else{
+          if(index < 1000){
+            currentIndex = "0\(index)"
+          }else{
+            currentIndex = "\(index)"
+          }
+        }
+      }
         //Create view print
         card = Card(nibName:"Card", bundle: nil)
         card.view.frame = CGRectMake(0, 0, 595, 842)
-        card.setPersonName(textName)
+        card.setInfo(name: textName, index: currentIndex)
         card.loadViewIfNeeded()
         
         //Set color for text name

@@ -37,7 +37,11 @@ class InputView: UIViewController, UITextFieldDelegate {
     if index < 10{
       personIndex.text = "00\(index)"
     }else{
-      personIndex.text = "\(index)"
+      if index < 100{
+        personIndex.text = "0\(index)"
+      }else{
+        personIndex.text = "\(index)"
+      }
     }
   }
   
@@ -73,17 +77,20 @@ class InputView: UIViewController, UITextFieldDelegate {
   
   func textFieldDidEndEditing(textField: UITextField) {
     scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
-  }
-  
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
+
     if (Regex().addPattern("\\d|\\W|[\\u3040-\\u309F]").test(textField.text!)) {
       let dialog = UIAlertController(title: "接続エラー", message: "平仮名や絵文字を入力できないようにする", preferredStyle: UIAlertControllerStyle.Alert)
       dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
       self.presentViewController(dialog, animated: true, completion: {
         self.btnOk.enabled = false
       })
+    }else{
+      self.btnOk.enabled = true
     }
+  }
+  
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
     return true
   }
   
@@ -95,7 +102,11 @@ class InputView: UIViewController, UITextFieldDelegate {
     }
     let newLength = currentCharacterCount + string.characters.count - range.length
     if(newLength > 0){
-      self.btnOk.enabled = true
+      if (Regex().addPattern("\\d|\\W|[\\u3040-\\u309F]").test(textField.text! + string)) {
+        self.btnOk.enabled = false
+      }else{
+        self.btnOk.enabled = true
+      }
     }else{
       self.btnOk.enabled = false
     }
