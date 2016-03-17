@@ -57,10 +57,10 @@
                         <action selector="btnFinished:" destination="-1" eventType="touchUpInside" id="f5I-8v-bVI"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sakurako" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="cdv-zx-0GY">
-                    <rect key="frame" x="257" y="173" width="511" height="134"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Megumi" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" id="cdv-zx-0GY">
+                    <rect key="frame" x="284" y="173" width="450" height="134"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="77"/>
+                    <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="92"/>
                     <color key="textColor" red="0.8784313725490196" green="0.77254901960784317" blue="0.41568627450980394" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" red="0.10196078431372549" green="0.074509803921568626" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
