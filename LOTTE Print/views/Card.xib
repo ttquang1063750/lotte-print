@@ -8,10 +8,14 @@
         <mutableArray key="GhanaPromoFont.otf">
             <string>GhanaPromoFont</string>
         </mutableArray>
+        <mutableArray key="ヒラギノ角ゴ Pro W6.otf">
+            <string>HiraKakuPro-W6</string>
+        </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Card" customModule="LOTTE_Print" customModuleProvider="target">
             <connections>
+                <outlet property="lbIndex" destination="ds5-lJ-zos" id="PV6-Gu-jeh"/>
                 <outlet property="mName" destination="uTi-7Q-Gdq" id="gI2-mw-hq4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -26,14 +30,21 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ghana" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="uTi-7Q-Gdq">
-                    <rect key="frame" x="67" y="309" width="465" height="119"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quang" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" id="uTi-7Q-Gdq">
+                    <rect key="frame" x="99" y="308" width="393" height="119"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="GhanaPromoFont" family="Ghana Promo Font" pointSize="102"/>
                     <color key="textColor" red="0.81176470588235294" green="0.67843137254901964" blue="0.12156862745098039" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" red="0.1019607843" green="0.074509803920000006" blue="0.066666666669999999" alpha="1" colorSpace="calibratedRGB"/>
                     <size key="shadowOffset" width="2" height="2"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0001" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ds5-lJ-zos">
+                    <rect key="frame" x="74" y="722" width="447" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HiraKakuPro-W6" family="Hiragino Kaku Gothic Pro" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

@@ -50,7 +50,7 @@ extension String {
         return String(characters.suffix(1))
     }
     var uppercaseFirst: String {
-        return first.uppercaseString + String(characters.dropFirst())
+        return first.uppercaseString + String(characters.dropFirst()).lowercaseString
     }
 }
 

@@ -34,7 +34,11 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
       index = index == 0 ? 1 : index
       self.lbIndex.text = "00\(index)"
     }else{
-      self.lbIndex.text = "\(index)"
+      if index < 100{
+        self.lbIndex.text = "0\(index)"
+      }else{
+        self.lbIndex.text = "\(index)"
+      }
     }
     
     
