@@ -15,6 +15,7 @@ class InputView: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var tfPersonName: UITextField!
   @IBOutlet weak var btnOk: UIButton!
   @IBOutlet weak var imgInputView: UIImageView!
+  @IBOutlet weak var lbHolder: UILabel!
   
   
   
@@ -89,14 +90,14 @@ class InputView: UIViewController, UITextFieldDelegate {
     scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
 
     if (isInValid(textField.text!)) {
-      let dialog = UIAlertController(title: "接続エラー", message: "半角英数字で入力してください", preferredStyle: UIAlertControllerStyle.Alert)
+      let dialog = UIAlertController(title: "入力エラー", message: "半角英数字で入力してください", preferredStyle: UIAlertControllerStyle.Alert)
       dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
       self.presentViewController(dialog, animated: true, completion: {
         self.btnOk.enabled = false
       })
     }else{
       self.btnOk.enabled = true
-      textField.text! = textField.text!.lowercaseString
+      textField.text! = textField.text!.uppercaseFirst
     }
   }
   
@@ -106,27 +107,32 @@ class InputView: UIViewController, UITextFieldDelegate {
   }
   
   func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    if (isInValid(string)) {
+      return false
+    }
+    
     let currentCharacterCount = textField.text?.characters.count ?? 0
     if (range.length + range.location > currentCharacterCount){
       return false
     }
     let newLength = currentCharacterCount + string.characters.count - range.length
     if(newLength > 0){
-      textField.text! = textField.text!.lowercaseString
-      let text = String(textField.text! + string).lowercaseString
-      if (isInValid(text)) {
-        self.btnOk.enabled = false
-      }else{
-        self.btnOk.enabled = true
-      }
+      textField.text! = textField.text!.uppercaseFirst
+      self.lbHolder.hidden = true
+       self.btnOk.enabled = true
     }else{
       self.btnOk.enabled = false
+      self.lbHolder.hidden = false
     }
     return newLength <= 8
   }
   
   func isInValid(text:String)->Bool{
-    return Regex().addPattern("\\d|\\W|[\\u3040-\\u309F]").test(text)
+    let characterSet = NSCharacterSet(charactersInString: "年月日時分×÷-=♪☆%¥〒~・…○()/☻？！+")
+    if let _ = text.rangeOfCharacterFromSet(characterSet, options: .CaseInsensitiveSearch, range: nil) {
+      return true
+    }
+    return Regex().addPattern("[\\u3040-\\u309F]|[\\u3000-\\u303F]|[\\u2605-\\u2606]|[\\u2190-\\u2195]|[\\uFF5F-\\uFF9F]|\\u203B|\\FFEE").test(text)
   }
 }
 
