@@ -107,7 +107,7 @@ class InputView: UIViewController, UITextFieldDelegate {
   }
   
   func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-    if (isInValid(string)) {
+    if (isInValid(string)&&string != "") {
       return false
     }
     
@@ -128,11 +128,12 @@ class InputView: UIViewController, UITextFieldDelegate {
   }
   
   func isInValid(text:String)->Bool{
-    let characterSet = NSCharacterSet(charactersInString: "年月日時分×÷-=♪☆%¥〒~・…○()/☻？！+")
-    if let _ = text.rangeOfCharacterFromSet(characterSet, options: .CaseInsensitiveSearch, range: nil) {
-      return true
-    }
-    return Regex().addPattern("[\\u3040-\\u309F]|[\\u3000-\\u303F]|[\\u2605-\\u2606]|[\\u2190-\\u2195]|[\\uFF5F-\\uFF9F]|\\u203B|\\FFEE").test(text)
+//    let characterSet = NSCharacterSet(charactersInString: "年月日時分×÷-=♪☆%¥〒~・…○()/☻？！+")
+//    if let _ = text.rangeOfCharacterFromSet(characterSet, options: .CaseInsensitiveSearch, range: nil) {
+//      return true
+//    }
+//    return Regex().addPattern("[\\u3040-\\u309F]|[\\u3000-\\u303F]|[\\u2605-\\u2606]|[\\u2190-\\u2195]|[\\uFF5F-\\uFF9F]|\\u203B|\\FFEE").test(text)
+    return !Regex().addPattern("[a-zA-Z]").test(text)
   }
 }
 
