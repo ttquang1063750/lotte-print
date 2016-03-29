@@ -133,7 +133,7 @@ class InputView: UIViewController, UITextFieldDelegate {
 //      return true
 //    }
 //    return Regex().addPattern("[\\u3040-\\u309F]|[\\u3000-\\u303F]|[\\u2605-\\u2606]|[\\u2190-\\u2195]|[\\uFF5F-\\uFF9F]|\\u203B|\\FFEE").test(text)
-    return !Regex().addPattern("[a-zA-Z]|[0-9]").test(text)
+    return !Regex().addPattern("[a-zA-Z0-9]").test(text)
   }
 }
 

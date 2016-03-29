@@ -38,7 +38,8 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     }
     //Create view print
     card = Card(nibName:"Card", bundle: nil)
-    card.view.frame = CGRectMake(0, 0, 595, 842)
+//    card.view.frame = CGRectMake(0, 0, 595, 842)
+    card.view.frame = CGRectMake(0, 0, 1240, 1754)
     card.setInfo(name: textName, index: currentIndex)
     card.loadViewIfNeeded()
     
