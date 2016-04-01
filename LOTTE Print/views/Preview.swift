@@ -41,7 +41,12 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
 //    card.view.frame = CGRectMake(0, 0, 595, 842)
     card.view.frame = CGRectMake(0, 0, 1240, 1754)
     card.setInfo(name: textName, index: currentIndex)
-    card.loadViewIfNeeded()
+ 
+    if #available(iOS 9.0, *) {
+        card.loadViewIfNeeded()
+    } else {
+        // Fallback on earlier versions
+    }
     
     //Set color for text name
     let image = GradientBackground.gradientImage(lbName.bounds.size)

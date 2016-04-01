@@ -72,9 +72,9 @@ class InputView: UIViewController, UITextFieldDelegate {
   
   
   @IBAction func submitForm(sender: UIButton) {
+     hideKeyBoard()
     if let text = tfPersonName.text where !text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).isEmpty
     {
-      hideKeyBoard()
       let previewViewController = Preview(nibName:"Preview", bundle: nil)
       previewViewController.setPersonName(text.uppercaseFirst)
       self.presentViewController(previewViewController, animated: true, completion: nil)
