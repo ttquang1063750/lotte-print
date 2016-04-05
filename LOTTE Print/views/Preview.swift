@@ -14,6 +14,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
   @IBOutlet weak var lbName: UILabel!
   @IBOutlet weak var mBtnPrint: UIButton!
   @IBOutlet weak var btnFinished: UIButton!
+  @IBOutlet weak var lbRecommend: UILabel!
   
   var lastPrinter:UIPrinter?
   var textName = ""
@@ -23,7 +24,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     super.viewDidLoad()
     lbName.text = textName
     self.btnFinished.enabled = false
-    
+    self.lbRecommend.hidden = true
     //Get indext
     let index = DataHelper.sharedInstance.getIncreaseIndex()
     var currentIndex = ""
@@ -117,13 +118,16 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
   
   func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafePointer<Void>) {
     if error == nil {
-      let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .Alert)
-      ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-      presentViewController(ac, animated: true, completion: nil)
+      let dialog = UIAlertController(title: "保存完了", message: "カメラロールに画像を保存しました。", preferredStyle: .Alert)
+      dialog.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+      presentViewController(dialog, animated: true, completion: {
+        self.btnFinished.enabled = true
+        self.lbRecommend.hidden = false
+      })
     } else {
-      let ac = UIAlertController(title: "Save error", message: error?.localizedDescription, preferredStyle: .Alert)
-      ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-      presentViewController(ac, animated: true, completion: nil)
+      let dialog = UIAlertController(title: "保存エラー", message: error?.localizedDescription, preferredStyle: .Alert)
+      dialog.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+      presentViewController(dialog, animated: true, completion: nil)
     }
   }
 
@@ -132,8 +136,8 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     if(error == nil){
       self.btnFinished.enabled = true
     }else{
-      let dialog = UIAlertController(title: "接続エラー", message: error?.domain, preferredStyle: UIAlertControllerStyle.Alert)
-      dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+      let dialog = UIAlertController(title: "接続エラー", message: error?.domain, preferredStyle: .Alert)
+      dialog.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
       self.presentViewController(dialog, animated: true, completion: nil)
     }
   }

@@ -8,12 +8,16 @@
         <mutableArray key="GhanaPromoFont.otf">
             <string>GhanaPromoFont</string>
         </mutableArray>
+        <mutableArray key="ヒラギノ角ゴ Pro W3.otf">
+            <string>HiraKakuPro-W3</string>
+        </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Preview" customModule="LOTTE_Print" customModuleProvider="target">
             <connections>
                 <outlet property="btnFinished" destination="y38-A5-7fc" id="b7y-Ta-o8r"/>
                 <outlet property="lbName" destination="cdv-zx-0GY" id="bwX-Ql-JET"/>
+                <outlet property="lbRecommend" destination="ZYH-E4-ZEh" id="JNk-L1-2C9"/>
                 <outlet property="mBtnPrint" destination="f3Z-pz-Q2F" id="TJP-6H-OtN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -65,6 +69,15 @@
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" red="0.10196078431372549" green="0.074509803921568626" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                     <size key="shadowOffset" width="2" height="2"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZYH-E4-ZEh">
+                    <rect key="frame" x="293" y="641" width="449" height="67"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <string key="text">※「OK」を押した後、
+    Canonアプリから印刷を行って下さい。</string>
+                    <fontDescription key="fontDescription" name="HiraKakuPro-W3" family="Hiragino Kaku Gothic Pro" pointSize="22"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
