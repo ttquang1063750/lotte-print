@@ -14,7 +14,6 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
   @IBOutlet weak var lbName: UILabel!
   @IBOutlet weak var mBtnPrint: UIButton!
   @IBOutlet weak var btnFinished: UIButton!
-  @IBOutlet weak var lbRecommend: UILabel!
   
   var lastPrinter:UIPrinter?
   var textName = ""
@@ -24,7 +23,6 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     super.viewDidLoad()
     lbName.text = textName
     self.btnFinished.enabled = false
-    self.lbRecommend.hidden = true
     //Get indext
     let index = DataHelper.sharedInstance.getIncreaseIndex()
     var currentIndex = ""
@@ -122,7 +120,6 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
       dialog.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
       presentViewController(dialog, animated: true, completion: {
         self.btnFinished.enabled = true
-        self.lbRecommend.hidden = false
       })
     } else {
       let dialog = UIAlertController(title: "保存エラー", message: error?.localizedDescription, preferredStyle: .Alert)
