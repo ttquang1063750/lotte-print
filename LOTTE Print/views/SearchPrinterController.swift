@@ -25,8 +25,8 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.tbListPrinter.registerNib(UINib(nibName: "PrinterCell", bundle: nil), forCellReuseIdentifier: "PrinterCell")
-    self.tbListPrinter.separatorStyle = UITableViewCellSeparatorStyle.None
+    self.tbListPrinter.register(UINib(nibName: "PrinterCell", bundle: nil), forCellReuseIdentifier: "PrinterCell")
+    self.tbListPrinter.separatorStyle = UITableViewCellSeparatorStyle.none
     self.lbPrinterName.text = "未設定"
     
     var index = DataHelper.sharedInstance.getIncreaseIndex()
@@ -55,11 +55,11 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
   }
   
   //Hide status bar
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
     //Only call one time if view loaded
@@ -76,7 +76,7 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
     }
   }
   
-  func isExistsPrinter(printer:Printer)->Bool{
+  func isExistsPrinter(_ printer:Printer)->Bool{
     var isExists = false
     for p in self.dataPrinter{
       if(p.isEqualUrl(printer.getPrinterUrl())){
@@ -87,19 +87,19 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
   }
   
   func getPrinter() {
-    dispatch_async(dispatch_get_main_queue(), {
+    DispatchQueue.main.async(execute: {
       self.dataPrinter.removeAll()
       self.tbListPrinter.reloadData()
       self.indicator.startAnimating()
-      self.btnReSearchPrinter.hidden = true
+      self.btnReSearchPrinter.isHidden = true
       let printPickerController = UIPrinterPickerController(initiallySelectedPrinter: nil)
       printPickerController.delegate = self
-      printPickerController.presentFromRect(CGRectMake(0, 0, 2048, 2048), inView: self.view, animated: true, completionHandler: nil)
+      printPickerController.present(from: CGRect(x: 0, y: 0, width: 2048, height: 2048), in: self.view, animated: true, completionHandler: nil)
     })
   }
   
   
-  func printerPickerController(printerPickerController: UIPrinterPickerController, shouldShowPrinter printer: UIPrinter) -> Bool {
+  func printerPickerController(_ printerPickerController: UIPrinterPickerController, shouldShow printer: UIPrinter) -> Bool {
     let printer = Printer(printer: printer)
     if(!isExistsPrinter(printer)){
       if(self.lastUrl != nil && printer.isEqualUrl(self.lastUrl!)){
@@ -110,30 +110,30 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
     return true
   }
   
-  func printerPickerControllerDidPresent(printerPickerController: UIPrinterPickerController) {
-    printerPickerController.dismissAnimated(false)
+  func printerPickerControllerDidPresent(_ printerPickerController: UIPrinterPickerController) {
+    printerPickerController.dismiss(animated: false)
     
     //Try research again if the first time can not found
     if(self.dataPrinter.count == 0 && self.isFirstTry){
       self.isFirstTry = false
       let seconds = 4.0
       let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-      let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-      dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+      let dispatchTime = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+      DispatchQueue.main.asyncAfter(deadline: dispatchTime, execute: {
          self.getPrinter()
       })
     }else{
       self.indicator.stopAnimating()
-      self.btnReSearchPrinter.hidden = false
+      self.btnReSearchPrinter.isHidden = false
       self.tbListPrinter.reloadData()
     }
   }
   
-  @IBAction func btnClose(sender: UIButton) {
-    self.dismissViewControllerAnimated(true, completion: nil)
+  @IBAction func btnClose(_ sender: UIButton) {
+    self.dismiss(animated: true, completion: nil)
   }
   
-  @IBAction func btnReset(sender: UIButton) {
+  @IBAction func btnReset(_ sender: UIButton) {
     GvAlertView().showDialog("title_confirm_reset.png", isBtnCancel: true, bgImageName:"bg_dialog.png") {
       (btnIndex) -> Void in
       
@@ -147,45 +147,45 @@ class SearchPrinterController: UIViewController, UITableViewDelegate, UITableVie
   func setResetOk(){
     self.lbIndex.text = DataHelper.sharedInstance.resetIndexToOrigin()
     
-    let date = NSDate()
-    let dayTimePeriodFormatter = NSDateFormatter()
+    let date = Date()
+    let dayTimePeriodFormatter = DateFormatter()
     dayTimePeriodFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-    let dateString = dayTimePeriodFormatter.stringFromDate(date)
+    let dateString = dayTimePeriodFormatter.string(from: date)
     self.setDateReset(dateString)
   }
   
   
-  func setDateReset(dateString:String){
-    self.lbDateReset.hidden = false
+  func setDateReset(_ dateString:String){
+    self.lbDateReset.isHidden = false
     self.lbDateReset.text = "（前回リセット日時：\(dateString)）"
     DataHelper.sharedInstance.setDateReset(dateString)
   }
   
   
-  @IBAction func reSearchPrinter(sender: UIButton) {
+  @IBAction func reSearchPrinter(_ sender: UIButton) {
     self.getPrinter()
   }
   
   
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 70.0
   }
-  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return self.dataPrinter.count
   }
   
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("PrinterCell", forIndexPath: indexPath) as! PrinterCell
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "PrinterCell", for: indexPath) as! PrinterCell
     let printer = self.dataPrinter[indexPath.row]
     cell.lbPrinterName.text = printer.getPrinterName()
     return cell
   }
   
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let printer = self.dataPrinter[indexPath.row]
     DataHelper.sharedInstance.setCurrentPrinterUrl(printer.getPrinterUrl())
     self.lastUrl = printer.getPrinterUrl()

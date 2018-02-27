@@ -10,23 +10,23 @@ import Foundation
 import UIKit
 
 class Printer:NSObject {
-    private var name:String
-    private var url:NSURL
+    fileprivate var name:String
+    fileprivate var url:URL
     
     //Init with object printer
     init(printer:UIPrinter){
         self.name = printer.displayName
-        self.url = printer.URL
+        self.url = printer.url
     }
     
     
     //Init with params name and url
-    init(printerName:String, printerUrl:NSURL) {
+    init(printerName:String, printerUrl:URL) {
         self.name = printerName
         self.url = printerUrl
     }
     
-    func setPrinterName(printerName:String){
+    func setPrinterName(_ printerName:String){
         self.name = printerName
     }
     
@@ -34,15 +34,15 @@ class Printer:NSObject {
         return self.name
     }
     
-    func setPrinterUrl(printerUrl:NSURL){
+    func setPrinterUrl(_ printerUrl:URL){
         self.url = printerUrl
     }
     
-    func getPrinterUrl()->NSURL{
+    func getPrinterUrl()->URL{
         return self.url
     }
     
-    func isEqualUrl(printerUrl:NSURL)->Bool{
+    func isEqualUrl(_ printerUrl:URL)->Bool{
         return printerUrl.absoluteString == self.url.absoluteString
     }
 }

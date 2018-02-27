@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class GvAlertView: UIViewController {
+open class GvAlertView: UIViewController {
 
     let kBackgroundTransparentcy:CGFloat = 0.7
  
@@ -22,13 +22,13 @@ public class GvAlertView: UIViewController {
     var strongSelf:GvAlertView?
     var contentView = UIView()
     var titleImageView:UIImageView = UIImageView()
-    var userAction:((btnIndex:Int)->Void)? = nil
+    var userAction:((_ btnIndex:Int)->Void)? = nil
     
     
     //Init View
     init(){
         super.init(nibName: nil, bundle: nil)
-        self.view.frame = UIScreen.mainScreen().bounds
+        self.view.frame = UIScreen.main.bounds
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: kBackgroundTransparentcy)
         self.view.addSubview(contentView)
         contentView.frame = CGRect(x: (self.view.frame.width - kContentWidth) / 2.0, y: (self.view.frame.height - kMaxHeight) / 2.0, width: kContentWidth, height: kMaxHeight)
@@ -40,13 +40,13 @@ public class GvAlertView: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func pressed(sender:UIButton){
+    open func pressed(_ sender:UIButton){
         self.closeDialog(sender.tag)
     }
     
-    func closeDialog(btnIndex:Int){
-        userAction?(btnIndex:btnIndex)
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+    func closeDialog(_ btnIndex:Int){
+        userAction?(btnIndex)
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
             self.view.alpha = 0.0
             }) { (Bool) -> Void in
                 self.view.removeFromSuperview()
@@ -57,19 +57,19 @@ public class GvAlertView: UIViewController {
         }
     }
     
-    func showDialog(titleImageName:String, isBtnCancel:Bool, bgImageName:String?, action:((btnIndex:Int)->Void)?){
+    func showDialog(_ titleImageName:String, isBtnCancel:Bool, bgImageName:String?, action:((_ btnIndex:Int)->Void)?){
         userAction = action
         
         //Create outer view and bring it to the top
-        let window: UIWindow = UIApplication.sharedApplication().keyWindow!
+        let window: UIWindow = UIApplication.shared.keyWindow!
         window.addSubview(self.view)
-        window.bringSubviewToFront(self.view)
+        window.bringSubview(toFront: self.view)
         view.frame = window.bounds
         var y = kTopMargin
         let x = kLeftMargin
         
         if(bgImageName != nil){
-            let bgImage = UIImageView(frame: CGRectMake(0, 0, contentView.frame.size.width, contentView.frame.size.height))
+            let bgImage = UIImageView(frame: CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height))
             bgImage.image = UIImage(named: bgImageName!)!
             contentView.addSubview(bgImage)
         }
@@ -77,7 +77,7 @@ public class GvAlertView: UIViewController {
         
         //Set title image
         let titleImage = UIImage(named: titleImageName)!
-        self.titleImageView.frame = CGRectMake(x, y, kContentWidth - x*2, titleImage.size.height)
+        self.titleImageView.frame = CGRect(x: x, y: y, width: kContentWidth - x*2, height: titleImage.size.height)
         self.titleImageView.image = titleImage
         contentView.addSubview(titleImageView)
         
@@ -87,18 +87,18 @@ public class GvAlertView: UIViewController {
         //Set btn cancel
         if(isBtnCancel){
             let btnCancelImage = UIImage(named: "btn_dialog_cancel.png")!
-            let btnCancel = UIButton(frame:CGRectMake(x + kButtonSpace, y, kButtonWidth, kButtonHeight))
-            btnCancel.setBackgroundImage(btnCancelImage, forState: UIControlState.Normal)
+            let btnCancel = UIButton(frame:CGRect(x: x + kButtonSpace, y: y, width: kButtonWidth, height: kButtonHeight))
+            btnCancel.setBackgroundImage(btnCancelImage, for: UIControlState())
             btnCancel.tag = 1
-            btnCancel.addTarget(self, action: "pressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            btnCancel.addTarget(self, action: #selector(GvAlertView.pressed(_:)), for: UIControlEvents.touchUpInside)
             self.contentView.addSubview(btnCancel)
         }
         
         //Set button ok
-        let btnOk = UIButton(frame: CGRectMake(x + kButtonSpace*2 + kButtonWidth, y, kButtonWidth, kButtonHeight))
+        let btnOk = UIButton(frame: CGRect(x: x + kButtonSpace*2 + kButtonWidth, y: y, width: kButtonWidth, height: kButtonHeight))
         btnOk.tag = 0
-        btnOk.setBackgroundImage(UIImage(named: "btn_dialog_ok.png")!, forState: UIControlState.Normal)
-        btnOk.addTarget(self, action: "pressed:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnOk.setBackgroundImage(UIImage(named: "btn_dialog_ok.png")!, for: UIControlState())
+        btnOk.addTarget(self, action: #selector(GvAlertView.pressed(_:)), for: UIControlEvents.touchUpInside)
         self.contentView.addSubview(btnOk)
         self.animateDialog()
     }
@@ -106,31 +106,31 @@ public class GvAlertView: UIViewController {
     func animateDialog() {
         
         view.alpha = 0;
-        UIView.animateWithDuration(0.1, animations: { () -> Void in
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
             self.view.alpha = 1.0;
         })
         
         let previousTransform = self.contentView.transform
         self.contentView.layer.transform = CATransform3DMakeScale(0.9, 0.9, 0.0);
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.contentView.layer.transform = CATransform3DMakeScale(1.1, 1.1, 0.0);
-            }) { (Bool) -> Void in
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
+            }, completion: { (Bool) -> Void in
+                UIView.animate(withDuration: 0.1, animations: { () -> Void in
                     self.contentView.layer.transform = CATransform3DMakeScale(0.9, 0.9, 0.0);
-                    }) { (Bool) -> Void in
-                        UIView.animateWithDuration(0.1, animations: { () -> Void in
+                    }, completion: { (Bool) -> Void in
+                        UIView.animate(withDuration: 0.1, animations: { () -> Void in
                             self.contentView.layer.transform = CATransform3DMakeScale(1.0, 1.0, 0.0);
-                            }) { (Bool) -> Void in
+                            }, completion: { (Bool) -> Void in
                                 self.contentView.transform = previousTransform
-                        }
-                }
-        }
+                        }) 
+                }) 
+        }) 
     }
 }
 
 
 extension UIColor {
-    class func colorFromRGB(rgbValue: UInt) -> UIColor {
+    class func colorFromRGB(_ rgbValue: UInt) -> UIColor {
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,

@@ -9,46 +9,47 @@
 import Foundation
 
 class DataHelper {
+    private static var __once: () = {
+            var instance = DataHelper()
+        }()
     class var sharedInstance: DataHelper {
         struct Static {
-            static var instance: DataHelper?
-            static var token: dispatch_once_t = 0
+            static var instance: DataHelper? = DataHelper()
+            static var token: Int = 0
         }
-        dispatch_once(&Static.token) {
-            Static.instance = DataHelper()
-        }
+        _ = DataHelper.__once
         return Static.instance!
     }
     
-    private let INDEXING = "INDEXING"
-    private let PRINTER_URL = "PRINTER_URL"
-    private let DATE_RESET = "DATE_RESET"
+    fileprivate let INDEXING = "INDEXING"
+    fileprivate let PRINTER_URL = "PRINTER_URL"
+    fileprivate let DATE_RESET = "DATE_RESET"
     
     
-    func setCurrentPrinterUrl(url:NSURL){
-        NSUserDefaults.standardUserDefaults().setURL(url, forKey: PRINTER_URL)
+    func setCurrentPrinterUrl(_ url:URL){
+        UserDefaults.standard.set(url, forKey: PRINTER_URL)
     }
     
-    func getCurrentPrinterURL()->NSURL?{
-        if(NSUserDefaults.standardUserDefaults().URLForKey(PRINTER_URL) == nil){
+    func getCurrentPrinterURL()->URL?{
+        if(UserDefaults.standard.url(forKey: PRINTER_URL) == nil){
             return nil
         }
-        return NSUserDefaults.standardUserDefaults().URLForKey(PRINTER_URL)!
+        return UserDefaults.standard.url(forKey: PRINTER_URL)!
     }
     
     func removeCurrentPrinterUrl(){
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(PRINTER_URL)
+        UserDefaults.standard.removeObject(forKey: PRINTER_URL)
     }
     
-    func setCurrentIndex(index:Int){
-        NSUserDefaults.standardUserDefaults().setInteger(index, forKey: INDEXING)
+    func setCurrentIndex(_ index:Int){
+        UserDefaults.standard.set(index, forKey: INDEXING)
     }
     
-    func getCurrentIndex(defaultValue:Int = 0)->Int{
-        if(NSUserDefaults.standardUserDefaults().valueForKey(INDEXING) == nil){
+    func getCurrentIndex(_ defaultValue:Int = 0)->Int{
+        if(UserDefaults.standard.value(forKey: INDEXING) == nil){
             return defaultValue
         }
-        return NSUserDefaults.standardUserDefaults().integerForKey(INDEXING)
+        return UserDefaults.standard.integer(forKey: INDEXING)
     }
     
     func getIncreaseIndex()->Int{
@@ -56,22 +57,22 @@ class DataHelper {
     }
     
     func resetIndexToOrigin()->String{
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(INDEXING)
+        UserDefaults.standard.removeObject(forKey: INDEXING)
         return "001"
     }
     
-    func setDateReset(dateString:String){
-        NSUserDefaults.standardUserDefaults().setValue(dateString, forKey: DATE_RESET)
+    func setDateReset(_ dateString:String){
+        UserDefaults.standard.setValue(dateString, forKey: DATE_RESET)
     }
     
     func getDateReset()->String?{
-        if(NSUserDefaults.standardUserDefaults().valueForKey(DATE_RESET) == nil){
+        if(UserDefaults.standard.value(forKey: DATE_RESET) == nil){
             return nil
         }
-        return NSUserDefaults.standardUserDefaults().stringForKey(DATE_RESET)
+        return UserDefaults.standard.string(forKey: DATE_RESET)
     }
     
     func synchronize(){
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.synchronize()
     }
 }

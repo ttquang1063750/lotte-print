@@ -22,7 +22,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     lbName.text = textName
-    self.btnFinished.enabled = false
+    self.btnFinished.isEnabled = false
     //Get indext
     let index = DataHelper.sharedInstance.getIncreaseIndex()
     var currentIndex = ""
@@ -38,7 +38,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     //Create view print
     card = Card(nibName:"Card", bundle: nil)
 //    card.view.frame = CGRectMake(0, 0, 595, 842)
-    card.view.frame = CGRectMake(0, 0, 1240, 1754)
+    card.view.frame = CGRect(x: 0, y: 0, width: 1240, height: 1754)
     card.setInfo(name: textName, index: currentIndex)
  
     if #available(iOS 9.0, *) {
@@ -53,7 +53,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
   }
   
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     self.image = self.createUIInage(self.card.view)
   }
@@ -64,30 +64,30 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
   }
   
   //Hide status bar
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
   
   //Button back to previous
-  @IBAction func btnBack(sender: UIButton) {
+  @IBAction func btnBack(_ sender: UIButton) {
     //        setCountIndex()
-    self.dismissViewControllerAnimated(true, completion: nil)
+    self.dismiss(animated: true, completion: nil)
   }
   
   //Button printer
-  @IBAction func btnPrint(sender: UIButton) {
+  @IBAction func btnPrint(_ sender: UIButton) {
     self.printCard()
   }
   
   
   //Button finished page
-  @IBAction func btnFinished(sender: UIButton) {
+  @IBAction func btnFinished(_ sender: UIButton) {
     setCountIndex()
-    self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
   }
   
   //Set name for label person name
-  func setPersonName(name:String){
+  func setPersonName(_ name:String){
     textName = name
   }
   
@@ -111,31 +111,31 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
 //      self.confirmDialog(error)
 //    }
     
-    UIImageWriteToSavedPhotosAlbum(self.image!, self, "image:didFinishSavingWithError:contextInfo:", nil)
+    UIImageWriteToSavedPhotosAlbum(self.image!, self, #selector(Preview.image(_:didFinishSavingWithError:contextInfo:)), nil)
   }
   
-  func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafePointer<Void>) {
+  func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
     if error == nil {
-      let dialog = UIAlertController(title: "保存完了", message: "カメラロールに画像を保存しました。", preferredStyle: .Alert)
-      dialog.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-      presentViewController(dialog, animated: true, completion: {
-        self.btnFinished.enabled = true
+      let dialog = UIAlertController(title: "保存完了", message: "カメラロールに画像を保存しました。", preferredStyle: .alert)
+      dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+      present(dialog, animated: true, completion: {
+        self.btnFinished.isEnabled = true
       })
     } else {
-      let dialog = UIAlertController(title: "保存エラー", message: error?.localizedDescription, preferredStyle: .Alert)
-      dialog.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-      presentViewController(dialog, animated: true, completion: nil)
+      let dialog = UIAlertController(title: "保存エラー", message: error?.localizedDescription, preferredStyle: .alert)
+      dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+      present(dialog, animated: true, completion: nil)
     }
   }
 
   
-  func confirmDialog(error:NSError?){
+  func confirmDialog(_ error:NSError?){
     if(error == nil){
-      self.btnFinished.enabled = true
+      self.btnFinished.isEnabled = true
     }else{
-      let dialog = UIAlertController(title: "接続エラー", message: error?.domain, preferredStyle: .Alert)
-      dialog.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-      self.presentViewController(dialog, animated: true, completion: nil)
+      let dialog = UIAlertController(title: "接続エラー", message: error?.domain, preferredStyle: .alert)
+      dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+      self.present(dialog, animated: true, completion: nil)
     }
   }
   
@@ -143,17 +143,17 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
 
 //Print image
 extension Preview{
-  func printImage(callback:((error:NSError?)->Void)?) {
+  func printImage(_ callback:((_ error:NSError?)->Void)?) {
     if(self.image != nil){
-      dispatch_async(dispatch_get_main_queue(), {
+      DispatchQueue.main.async(execute: {
         
         //Init printer inteface controller
-        let printController = UIPrintInteractionController.sharedPrintController()
+        let printController = UIPrintInteractionController.shared
         
         //Setting printer
         let printInfo = UIPrintInfo.printInfo()
-        printInfo.outputType = .General
-        printInfo.duplex = .None
+        printInfo.outputType = .general
+        printInfo.duplex = .none
         printController.printInfo = printInfo
         printController.showsPageRange = false
         printController.printingItem = self.image
@@ -161,15 +161,24 @@ extension Preview{
         // Get last url of printer
         let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()
         if(printerURL == nil){
-          callback?(error: NSError(domain: "プリンターに接続できませんでした。設定画面よりプリンターが設定されているか確認してください。", code: 500, userInfo: nil))
+          callback?(NSError(domain: "プリンターに接続できませんでした。設定画面よりプリンターが設定されているか確認してください。", code: 500, userInfo: nil))
         }else{
           
-          let printer = UIPrinter(URL: printerURL!)
+          let printer = UIPrinter(url: printerURL! as URL)
           // I will print without printer panel this here.
-          printController.printToPrinter(printer, completionHandler: {
-            (printer, b, error) -> Void in
-            callback?(error: error)
-          })
+//          printController.print(to: printer, completionHandler: {
+//            (printer, b, error) -> Void in
+//            (callback?(error))!
+//          })
+            
+            
+            
+            printController.print(to: printer, completionHandler: { (printer:UIPrintInteractionController, b:Bool,error: Error?) in
+                (callback?(error! as NSError))!
+            })
+            
+            
+            
         }
       })
     }
@@ -180,8 +189,8 @@ extension Preview{
 
 //Create PDF file from UIView
 extension Preview{
-  func createPDFfromUIView(aView:UIView, aFilename:String, callback:(error:NSError?, pathName:NSURL)->Void){
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+  func createPDFfromUIView(_ aView:UIView, aFilename:String, callback:@escaping (_ error:NSError?, _ pathName:URL)->Void){
+    DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: { () -> Void in
       // Creates a mutable data object for updating with binary data, like a byte array
       let pdfData = NSMutableData()
       
@@ -192,25 +201,25 @@ extension Preview{
       
       
       // draws rect to the view and thus this is captured by UIGraphicsBeginPDFContextToData
-      aView.layer.renderInContext(pdfContext!)
+      aView.layer.render(in: pdfContext!)
       
       // remove PDF rendering context
       UIGraphicsEndPDFContext();
       
       // Retrieves the document directories from the iOS device
       //Get the local docs directory and append your local filename.
-      var url = (NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)).last
+      var url = (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)).last
       
-      url = url?.URLByAppendingPathComponent(aFilename)
+      url = url?.appendingPathComponent(aFilename)
       
       //Lastly, write your file to the disk.
-      let result = pdfData.writeToURL(url!, atomically: true)
+      let result = pdfData.write(to: url!, atomically: true)
       
       // instructs the mutable data object to write its context to a file on disk
       if(result){
-        callback(error:nil, pathName: url!)
+        callback(nil, url!)
       }else{
-        callback(error:NSError(domain: "Can not create file", code: 500, userInfo: nil), pathName:url!)
+        callback(NSError(domain: "Can not create file", code: 500, userInfo: nil), url!)
       }
     })
     
@@ -219,11 +228,11 @@ extension Preview{
 
 //Create PDF file from UIView
 extension Preview{
-  func createUIInage(view:UIView)->UIImage{
+  func createUIInage(_ view:UIView)->UIImage{
     //Convert UIView to UIImage
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0)
-    view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-    let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.isOpaque, 0.0)
+    view.layer.render(in: UIGraphicsGetCurrentContext()!)
+    let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
     UIGraphicsEndImageContext()
     return image
   }
@@ -231,15 +240,15 @@ extension Preview{
 
 //Create PDF file from UIView
 extension Preview{
-  func createPhotofromUIView(view:UIView, aFilename:String, callback:(error:NSError?, pathName:NSURL)->Void){
+  func createPhotofromUIView(_ view:UIView, aFilename:String, callback:(_ error:NSError?, _ pathName:URL)->Void){
     
     //Convert UIView to UIImage
     let image = createUIInage(view)
     
     
     //Create image path to document folder
-    var url = (NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)).last
-    url = url?.URLByAppendingPathComponent(aFilename)
+    var url = (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)).last
+    url = url?.appendingPathComponent(aFilename)
     
     let pathExtention = url!.pathExtension
     var result = false
@@ -247,49 +256,49 @@ extension Preview{
     //Lastly, write your file to the disk.
     if(pathExtention == "png"){
       let pngImageData = UIImagePNGRepresentation(image)
-      result = pngImageData!.writeToURL(url!, atomically: true)
+      result = (try? pngImageData!.write(to: url!, options: [.atomic])) != nil
     }else{
       let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
-      result = jpgImageData!.writeToURL(url!, atomically: true)
+      result = (try? jpgImageData!.write(to: url!, options: [.atomic])) != nil
     }
     
     //Check status file writed and set callback
     if(result){
-      callback(error:nil, pathName: url!)
+      callback(nil, url!)
     }else{
-      callback(error:NSError(domain: "Can not create image file", code: 500, userInfo: nil), pathName:url!)
+      callback(NSError(domain: "Can not create image file", code: 500, userInfo: nil), url!)
     }
   }
 }
 
 //Save image file
 extension Preview{
-  func saveImage(image:UIImage, callback:(error:NSError?, pathName:NSURL)->Void){
+  func saveImage(_ image:UIImage, callback:(_ error:NSError?, _ pathName:URL)->Void){
     //Create image path to document folder
-    let url = (NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)).last
-    let urlJpg = url?.URLByAppendingPathComponent("card.jpg")
-    let urlPng = url?.URLByAppendingPathComponent("card.png")
+    let url = (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)).last
+    let urlJpg = url?.appendingPathComponent("card.jpg")
+    let urlPng = url?.appendingPathComponent("card.png")
     
     
     let pngImageData = UIImagePNGRepresentation(image)
-    pngImageData!.writeToURL(urlPng!, atomically: true)
+    try? pngImageData!.write(to: urlPng!, options: [.atomic])
     let jpgImageData = UIImageJPEGRepresentation(image, 1.0)
-    jpgImageData!.writeToURL(urlJpg!, atomically: true)
+    try? jpgImageData!.write(to: urlJpg!, options: [.atomic])
     
     //Check status file writed and set callback
-    callback(error:NSError(domain: "Created Image", code: 500, userInfo: nil), pathName:url!)
+    callback(NSError(domain: "Created Image", code: 500, userInfo: nil), url!)
   }
 }
 
 //Print file from url
 extension Preview{
-  func printWithoutPanel(dataUrl:NSURL, callback:((error:NSError?)->Void)?) {
-    dispatch_async(dispatch_get_main_queue(), {
-      let myData = NSData(contentsOfURL: dataUrl)
-      if (UIPrintInteractionController.canPrintData(myData!) ) {
-        let printController = UIPrintInteractionController.sharedPrintController()
+  func printWithoutPanel(_ dataUrl:URL, callback:((_ error:NSError?)->Void)?) {
+    DispatchQueue.main.async(execute: {
+      let myData = try? Data(contentsOf: dataUrl)
+      if (UIPrintInteractionController.canPrint(myData!) ) {
+        let printController = UIPrintInteractionController.shared
         let printInfo = UIPrintInfo.printInfo()
-        printInfo.outputType = UIPrintInfoOutputType.General
+        printInfo.outputType = UIPrintInfoOutputType.general
         printController.printInfo = printInfo
         printController.showsPageRange = false
         printController.printingItem = myData
@@ -297,15 +306,19 @@ extension Preview{
         // Create printer information
         let printerURL = DataHelper.sharedInstance.getCurrentPrinterURL()
         if(printerURL == nil){
-          callback?(error: NSError(domain: "The printer url not found. Please go to setting to reconnect printer again", code: 500, userInfo: nil))
+          callback?(NSError(domain: "The printer url not found. Please go to setting to reconnect printer again", code: 500, userInfo: nil))
         }else{
           
-          let printer = UIPrinter(URL: printerURL!)
+          let printer = UIPrinter(url: printerURL! as URL)
           // I will print without printer panel this here.
-          printController.printToPrinter(printer, completionHandler: {
-            (printer, b, error) -> Void in
-            callback?(error: error)
-          })
+//          printController.print(to: printer, completionHandler: {
+//            (printer, b, error) -> Void in
+//            (callback?(error))!
+//          })
+            
+            printController.print(to: printer, completionHandler: { (p:UIPrintInteractionController, b:Bool, error:Error?) in
+            (callback?(error! as NSError))!
+           })
         }
       }
     })

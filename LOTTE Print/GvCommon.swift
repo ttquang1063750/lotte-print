@@ -17,11 +17,11 @@ extension String {
     }
     
     ///Convert String to Datetime
-    func dateTimeValue() -> NSDate {
-        let dateFormatter = NSDateFormatter()
+    func dateTimeValue() -> Date {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone=NSTimeZone(name: "GMT")
-        let date = dateFormatter.dateFromString((self as NSString) as String)
+        dateFormatter.timeZone=TimeZone(identifier: "GMT")
+        let date = dateFormatter.date(from: (self as NSString) as String)
         return date!
     }
     
@@ -35,8 +35,8 @@ extension String {
         return (self as NSString).doubleValue
     }
     
-    func replace(string:String, replacement:String) -> String {
-        return self.stringByReplacingOccurrencesOfString(string, withString: replacement, options: NSStringCompareOptions.LiteralSearch, range: nil)
+    func replace(_ string:String, replacement:String) -> String {
+        return self.replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)
     }
     
     func removeWhitespace() -> String {
@@ -50,18 +50,18 @@ extension String {
         return String(characters.suffix(1))
     }
     var uppercaseFirst: String {
-        return first.uppercaseString + String(characters.dropFirst()).lowercaseString
+        return first.uppercased() + String(characters.dropFirst()).lowercased()
     }
 }
 
-extension NSDate {
+extension Date {
     
     ///Convert String to double with custom format
-    func toString(dateFormat dateFormat:String) -> String {
-        let dateFormatter = NSDateFormatter()
+    func toString(dateFormat:String) -> String {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
-        dateFormatter.timeZone=NSTimeZone(name: "GMT")
-        return  dateFormatter.stringFromDate(self)
+        dateFormatter.timeZone=TimeZone(identifier: "GMT")
+        return  dateFormatter.string(from: self)
     }
     
     ///Convert String to double with the default format
@@ -70,45 +70,49 @@ extension NSDate {
     }
     
     func getDayOfWeek()->Int {
-        let formatter  = NSDateFormatter()
+        let formatter  = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let todayDate = self
-        let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let myComponents = myCalendar.components(.Weekday, fromDate: todayDate)
+        let myCalendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        let myComponents = (myCalendar as NSCalendar).components(.weekday, from: todayDate)
         let weekDay = myComponents.weekday
-        return weekDay
+        return weekDay!
     }
 }
 
 final class GvAsyncTask<Params, Result>{
     
-    private var onPreExecute:(()->Void)?
+    fileprivate var onPreExecute:(()->Void)?
     
-    private var onPostExecute:((result:Result) -> Void)?
+    fileprivate var onPostExecute:((_ result:Result) -> Void)?
     
-    private var doInBackground:((params:[Params]) -> Result)!
+    fileprivate var doInBackground:((_ params:[Params]) -> Result)!
     
-    init(doInBackground:((params:[Params]) -> Result), onPreExecute:(()->Void)? = nil, onPostExecute:((result:Result) -> Void)? = nil){
+    init(doInBackground:@escaping ((_ params:[Params]) -> Result), onPreExecute:(()->Void)? = nil, onPostExecute:((_ result:Result) -> Void)? = nil){
         self.onPreExecute = onPreExecute
         self.onPostExecute = onPostExecute
         self.doInBackground = doInBackground
     }
     
-    func execute(params:Params...){
-        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        dispatch_async(backgroundQueue, {
+    func execute(_ params:Params...){
+        let qualityOfServiceClass = DispatchQoS.QoSClass.background
+        let backgroundQueue = DispatchQueue.global(qos: qualityOfServiceClass)
+        backgroundQueue.async(execute: {
             
             if(self.onPreExecute != nil ){
                 self.onPreExecute!()
             }
             
-            let results:Result = self.doInBackground(params: params)
+//            let results:Result = self.doInBackground(params: params)
             
-            dispatch_async(dispatch_get_main_queue()){
+            
+            let results:Result = self.doInBackground(params)
+        
+            
+            DispatchQueue.main.async{
                 
                 if(self.onPostExecute != nil){
-                    self.onPostExecute!(result:results)
+                    self.onPostExecute!(results)
                 }
             }
         })
@@ -118,13 +122,13 @@ final class GvAsyncTask<Params, Result>{
 extension Dictionary {
     
     ///Just update the value for the key only if the value is not null
-    mutating func updateValueNotNull(value: Value?, forKey key: Key){
+    mutating func updateValueNotNull(_ value: Value?, forKey key: Key){
         if(value != nil){
             self.updateValue(value!, forKey: key)
         }
     }
     
-    func integerForKey(forKey: Key) -> Int?{
+    func integerForKey(_ forKey: Key) -> Int?{
         var value = self[forKey] as? Int
         if(value == nil){
             value = (self[forKey] as? String)?.integerValue()
@@ -132,21 +136,21 @@ extension Dictionary {
         return value
     }
     
-    func boolForKey(forKey: Key) -> Bool{
+    func boolForKey(_ forKey: Key) -> Bool{
         return self[forKey] as! Bool
     }
     
-    func stringForKey(forKey: Key) -> String{
+    func stringForKey(_ forKey: Key) -> String{
         return self[forKey] as! String
     }
     
-    func dateForKey(forKey: Key) -> NSDate{
-        var value = self[forKey] as? NSDate
+    func dateForKey(_ forKey: Key) -> Date{
+        var value = self[forKey] as? Date
         
         if(value == nil){
             let interval:Double? = (self[forKey] as? Double)
             if(interval != nil){
-                value = NSDate(timeIntervalSince1970: interval!)
+                value = Date(timeIntervalSince1970: interval!)
             }
             
             let stringValue:String? = (self[forKey] as? String)
@@ -161,11 +165,11 @@ extension Dictionary {
 
 extension UIAlertController {
     // LeHien: Create a waiting dialog with title, message and Activity indicator
-    class func createWaitingDialog(title:String?,message:String)->UIAlertController{
-        let waitingDialog=UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
-        indicatorView.frame = CGRectMake(120, 60, 30, 30)
-        indicatorView.color = UIColor.grayColor()
+    class func createWaitingDialog(_ title:String?,message:String)->UIAlertController{
+        let waitingDialog=UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+        indicatorView.frame = CGRect(x: 120, y: 60, width: 30, height: 30)
+        indicatorView.color = UIColor.gray
         waitingDialog.view.addSubview(indicatorView)
         indicatorView.startAnimating()
         return waitingDialog
@@ -187,8 +191,8 @@ extension Array
     }
 }
 extension Array{
-    func indexOf(t:Element,isMatch:((Element) -> Bool))->Int{
-        for (idx, element) in self.enumerate() {
+    func indexOf(_ t:Element,isMatch:((Element) -> Bool))->Int{
+        for (idx, element) in self.enumerated() {
             if isMatch(element) {
                 return idx
             }

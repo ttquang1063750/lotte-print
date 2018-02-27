@@ -23,7 +23,7 @@ class Card: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
-  func setInfo(name name:String, index:String){
+  func setInfo(name:String, index:String){
     self.mName.text = name
     self.lbIndex.text = index
     //Set color for text name

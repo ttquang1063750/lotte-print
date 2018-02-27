@@ -23,7 +23,7 @@ class InputView: UIViewController, UITextFieldDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     tfPersonName.delegate = self
-    self.btnOk.enabled = false
+    self.btnOk.isEnabled = false
     let index = DataHelper.sharedInstance.getIncreaseIndex()
     if index < 10{
       personIndex.text = "00\(index)"
@@ -31,13 +31,13 @@ class InputView: UIViewController, UITextFieldDelegate {
       personIndex.text = "\(index)"
     }
     
-    let tap = UITapGestureRecognizer(target: self, action: Selector("hideKeyBoard"))
+    let tap = UITapGestureRecognizer(target: self, action: #selector(InputView.hideKeyBoard))
     imgInputView.addGestureRecognizer(tap)
-    imgInputView.userInteractionEnabled = true
+    imgInputView.isUserInteractionEnabled = true
     
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     let index = DataHelper.sharedInstance.getIncreaseIndex()
     if index < 10{
@@ -57,7 +57,7 @@ class InputView: UIViewController, UITextFieldDelegate {
   }
   
   //Hide status bar
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
   
@@ -65,48 +65,48 @@ class InputView: UIViewController, UITextFieldDelegate {
     tfPersonName.resignFirstResponder()
   }
   
-  @IBAction func goBack(sender: UIButton) {
+  @IBAction func goBack(_ sender: UIButton) {
     hideKeyBoard()
-    self.dismissViewControllerAnimated(true, completion: nil)
+    self.dismiss(animated: true, completion: nil)
   }
   
   
-  @IBAction func submitForm(sender: UIButton) {
+  @IBAction func submitForm(_ sender: UIButton) {
      hideKeyBoard()
-    if let text = tfPersonName.text where !text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).isEmpty
+    if let text = tfPersonName.text, !text.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty
     {
       let previewViewController = Preview(nibName:"Preview", bundle: nil)
       previewViewController.setPersonName(text.uppercaseFirst)
-      self.presentViewController(previewViewController, animated: true, completion: nil)
+      self.present(previewViewController, animated: true, completion: nil)
     }
   }
   
   
-  func textFieldDidBeginEditing(textField: UITextField){
-    scrollView.setContentOffset(CGPointMake(0, 250), animated: true)
+  func textFieldDidBeginEditing(_ textField: UITextField){
+    scrollView.setContentOffset(CGPoint(x: 0, y: 250), animated: true)
   }
   
-  func textFieldDidEndEditing(textField: UITextField) {
-    scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
 
     if (isInValid(textField.text!)) {
-      let dialog = UIAlertController(title: "入力エラー", message: "半角英数字で入力してください", preferredStyle: UIAlertControllerStyle.Alert)
-      dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
-      self.presentViewController(dialog, animated: true, completion: {
-        self.btnOk.enabled = false
+      let dialog = UIAlertController(title: "入力エラー", message: "半角英数字で入力してください", preferredStyle: UIAlertControllerStyle.alert)
+      dialog.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
+      self.present(dialog, animated: true, completion: {
+        self.btnOk.isEnabled = false
       })
     }else{
-      self.btnOk.enabled = true
+      self.btnOk.isEnabled = true
       textField.text! = textField.text!.uppercaseFirst
     }
   }
   
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
   }
   
-  func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     if (isInValid(string)&&string != "") {
       return false
     }
@@ -118,16 +118,16 @@ class InputView: UIViewController, UITextFieldDelegate {
     let newLength = currentCharacterCount + string.characters.count - range.length
     if(newLength > 0){
       textField.text! = textField.text!.uppercaseFirst
-      self.lbHolder.hidden = true
-       self.btnOk.enabled = true
+      self.lbHolder.isHidden = true
+       self.btnOk.isEnabled = true
     }else{
-      self.btnOk.enabled = false
-      self.lbHolder.hidden = false
+      self.btnOk.isEnabled = false
+      self.lbHolder.isHidden = false
     }
     return newLength <= 8
   }
   
-  func isInValid(text:String)->Bool{
+  func isInValid(_ text:String)->Bool{
 //    let characterSet = NSCharacterSet(charactersInString: "年月日時分×÷-=♪☆%¥〒~・…○()/☻？！+")
 //    if let _ = text.rangeOfCharacterFromSet(characterSet, options: .CaseInsensitiveSearch, range: nil) {
 //      return true
@@ -141,17 +141,17 @@ class Regex {
   var internalExpression: NSRegularExpression?
   var pattern: String?
   
-  func addPattern(pattern: String)->Regex{
+  func addPattern(_ pattern: String)->Regex{
     do{
       self.pattern = pattern
-      self.internalExpression = try NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
+      self.internalExpression = try NSRegularExpression(pattern: pattern, options: .caseInsensitive)
     }catch{
     }
     return self
   }
   
-  func test(input: String) -> Bool {
-    let matches = self.internalExpression!.matchesInString(input, options: NSMatchingOptions.WithTransparentBounds, range: NSMakeRange(0, input.characters.count))
+  func test(_ input: String) -> Bool {
+    let matches = self.internalExpression!.matches(in: input, options: NSRegularExpression.MatchingOptions.withTransparentBounds, range: NSMakeRange(0, input.characters.count))
     return matches.count > 0
   }
 }

@@ -25,18 +25,18 @@ class ViewController: UIViewController {
     }
     
     //Hide status bar
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
-    @IBAction func gotoInputView(sender: UIButton) {
+    @IBAction func gotoInputView(_ sender: UIButton) {
         let inputView = InputView(nibName:"InputView",bundle: nil)
-        self.presentViewController(inputView, animated: true, completion: nil)
+        self.present(inputView, animated: true, completion: nil)
     }
     
-    @IBAction func btnSetting(sender: UIButton) {
+    @IBAction func btnSetting(_ sender: UIButton) {
         let searchPrinter = SearchPrinterController(nibName:"SearchPrinterController",bundle: nil)
-        self.presentViewController(searchPrinter, animated: true, completion: nil)
+        self.present(searchPrinter, animated: true, completion: nil)
     }
 }
 
