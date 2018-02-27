@@ -40,7 +40,7 @@ open class GvAlertView: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open func pressed(_ sender:UIButton){
+    @objc open func pressed(_ sender:UIButton){
         self.closeDialog(sender.tag)
     }
     

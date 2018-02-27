@@ -114,7 +114,7 @@ class Preview: UIViewController, UIPrinterPickerControllerDelegate {
     UIImageWriteToSavedPhotosAlbum(self.image!, self, #selector(Preview.image(_:didFinishSavingWithError:contextInfo:)), nil)
   }
   
-  func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
+  @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
     if error == nil {
       let dialog = UIAlertController(title: "保存完了", message: "カメラロールに画像を保存しました。", preferredStyle: .alert)
       dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

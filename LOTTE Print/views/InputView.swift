@@ -61,7 +61,7 @@ class InputView: UIViewController, UITextFieldDelegate {
     return true
   }
   
-  func hideKeyBoard(){
+  @objc func hideKeyBoard(){
     tfPersonName.resignFirstResponder()
   }
   
