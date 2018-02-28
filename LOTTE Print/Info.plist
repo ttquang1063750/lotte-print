@@ -41,5 +41,7 @@
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>use photo library</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>use photo library to save image</string>
 </dict>
 </plist>
